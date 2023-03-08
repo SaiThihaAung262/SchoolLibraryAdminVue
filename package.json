@@ -5,11 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "cross-env vite --mode development",
-    "build": "cross-env vite build --mode development",
-    "dev:prod": "cross-env vite --mode production",
-    "build:prod": "cross-env vite build --mode production",
-    "dev:zlhy": "cross-env vite --mode zlhy",
-    "build:zlhy": "cross-env vite build --mode zlhy"
+    "build": "cross-env vite build --mode development"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
