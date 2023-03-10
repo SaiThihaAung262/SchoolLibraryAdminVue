@@ -2,12 +2,12 @@
   <el-result
     icon="error"
     title="404"
-    subTitle="页面不存在！"
+    subTitle="Page does not exist!"
     style="width: 100%; height: 100vh"
   >
     <template #extra>
       <el-button type="primary" @click="onNavigateBack" class="app-button"
-        >返回</el-button
+        >return</el-button
       >
     </template>
   </el-result>

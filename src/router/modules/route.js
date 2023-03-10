@@ -1,5 +1,6 @@
 import { auth } from "./auth";
 import { article } from "./aritcle";
+import { bookManagement } from "./bookManagement";
 
 export const routes = [
   {
@@ -36,4 +37,5 @@ export const routes = [
   },
   ...auth,
   ...article,
+  ...bookManagement,
 ];

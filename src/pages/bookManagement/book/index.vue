@@ -162,7 +162,7 @@ import { ElMessageBox, ElMessage } from "element-plus";
 import { useI18n } from "vue-i18n";
 
 export default {
-  name: "Admin",
+  name: "Book",
   components: {
     Dialog,
   },
@@ -252,7 +252,7 @@ export default {
         draggable: true,
       })
         .then(() => {
-          http.auth.deleteAdminList({ id: id }).then((res) => {
+          http.auth.deleteAdminList({ admin_ids: [id] }).then((res) => {
             if (res.data.err_code == 0) {
               ElMessage.success(res.data.err_msg);
               search();

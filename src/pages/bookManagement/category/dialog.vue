@@ -7,32 +7,19 @@
   >
     <el-form label-width="120px" ref="formRef" :model="form">
       <el-form-item
-        label="Username : "
-        prop="name"
+        label="Title : "
+        prop="title"
         :rules="[{ required: true, message: 'Required!', trigger: 'blur' }]"
       >
-        <el-input v-model="form.name" placeholder="" />
+        <el-input v-model="form.title" placeholder="" />
       </el-form-item>
 
       <el-form-item
-        label="Email : "
-        prop="email"
+        label="Description : "
+        prop="desc"
         :rules="[{ required: true, message: 'Required!', trigger: 'blur' }]"
       >
-        <el-input v-model="form.email" placeholder="" />
-      </el-form-item>
-
-      <el-form-item
-        v-if="dialogTitle == 'Add'"
-        label="Password"
-        prop="password"
-        :rules="[{ required: true, message: 'Required!', trigger: 'blur' }]"
-      >
-        <el-input v-model="form.password" placeholder="" type="password" />
-      </el-form-item>
-
-      <el-form-item label="Password" v-else>
-        <el-input v-model="form.password" placeholder="" type="password" />
+        <el-input v-model="form.desc" placeholder="" />
       </el-form-item>
 
       <!-- <el-form-item :label="t('table.state')">
@@ -71,9 +58,8 @@ export default {
       uploadPercent: 0,
 
       form: {
-        name: "",
-        email: "",
-        password: "",
+        title: "",
+        desc: "",
       },
       roleList: [],
       percentage: 0,
@@ -95,13 +81,12 @@ export default {
       formRef.validate((valid) => {
         if (valid) {
           if (state.dialogTitle == "Add") {
-            http.auth.addAdminList(state.form).then((res) => {
+            http.bookManagement.addCategoryList(state.form).then((res) => {
               if (res.data.err_code == 0) {
                 closeDialog(formRef);
                 state.form = {
-                  name: "",
-                  email: "",
-                  password: "",
+                  title: "",
+                  desc: "",
                 };
                 ElMessage.success(res.data.err_msg);
 
@@ -112,13 +97,12 @@ export default {
               }
             });
           } else {
-            http.auth.editAdminList(state.form).then((res) => {
+            http.bookManagement.editCategoryList(state.form).then((res) => {
               if (res.data.err_code == 0) {
                 closeDialog(formRef);
                 state.form = {
-                  name: "",
-                  email: "",
-                  password: "",
+                  title: "",
+                  desc: "",
                 };
                 ElMessage.success(res.data.err_msg);
 
@@ -139,15 +123,13 @@ export default {
       if (props.data.hasOwnProperty("id")) {
         state.form = {
           id: props.data.id,
-          name: props.data.name,
-          email: props.data.email,
-          password: props.data.password,
+          title: props.data.title,
+          desc: props.data.desc,
         };
       } else {
         state.form = {
-          name: "",
-          email: "",
-          password: "",
+          title: "",
+          desc: "",
         };
       }
     });

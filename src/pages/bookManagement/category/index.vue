@@ -64,22 +64,9 @@
         style="width: 100%"
       >
         <el-table-column prop="id" label="ID" align="center" />
-        <el-table-column prop="name" label="Username" align="center" />
+        <el-table-column prop="title" label="Title" align="center" />
 
-        <el-table-column prop="email" label="Email" align="center" />
-
-        <!-- <el-table-column :label="t('table.state')" align="center">
-          <template #default="scope">
-            <el-switch
-              v-model="scope.row.status"
-              :active-value="1"
-              :inactive-value="2"
-              active-color="#13ce66"
-              inactive-color="#ff4949"
-              @change="changeStatus(scope.row)"
-            />
-          </template>
-        </el-table-column> -->
+        <el-table-column prop="desc" label="Description" align="center" />
 
         <el-table-column
           label="Operate"
@@ -150,7 +137,7 @@
     :roleList="roleList"
   />
 </template>
-
+k
 <script>
 import { onMounted, reactive, toRefs, computed } from "vue";
 import Dialog from "./dialog.vue";
@@ -162,7 +149,7 @@ import { ElMessageBox, ElMessage } from "element-plus";
 import { useI18n } from "vue-i18n";
 
 export default {
-  name: "Admin",
+  name: "Category",
   components: {
     Dialog,
   },
@@ -192,12 +179,11 @@ export default {
 
     const getTableLists = () => {
       state.isLoading = true;
-      http.auth.getAdminList(state.param).then((res) => {
+      http.bookManagement.getCategoryList(state.param).then((res) => {
         if (res.data.err_code == 0) {
           console.log(res.data.data.list);
           state.tableLists = res.data.data.list;
           state.total = res.data.data.total;
-          state.roleList = res.data.data.roles;
           state.isLoading = false;
         }
       });
@@ -252,7 +238,7 @@ export default {
         draggable: true,
       })
         .then(() => {
-          http.auth.deleteAdminList({ id: id }).then((res) => {
+          http.bookManagement.deleteCategoryList({ id: id }).then((res) => {
             if (res.data.err_code == 0) {
               ElMessage.success(res.data.err_msg);
               search();
@@ -268,42 +254,6 @@ export default {
           });
         });
     };
-
-    // const changeStatus = (row) => {
-    //   ElMessageBox.confirm(t("common.sureSave"), t("common.warning"), {
-    //     confirmButtonText: t("common.sure"),
-    //     cancelButtonText: t("common.cancle"),
-    //     type: "warning",
-    //     draggable: true,
-    //   })
-    //     .then(() => {
-    //       let param = {
-    //         id: row.id,
-    //         username: row.username,
-    //         email: row.email,
-    //         identification: row.identification,
-    //         nickname: row.nickname,
-    //         password: row.password,
-    //         status: row.status,
-    //       };
-
-    //       http.auth.editAdminList(param).then((res) => {
-    //         if (res.data.err_code == 0) {
-    //           ElMessage.success(res.data.err_msg);
-    //           search();
-    //         } else {
-    //           ElMessage.error(res.data.err_msg);
-    //         }
-    //       });
-    //     })
-    //     .catch(() => {
-    //       search();
-    //       ElMessage({
-    //         type: "info",
-    //         message: t("common.cancle"),
-    //       });
-    //     });
-    // };
 
     const search = () => {
       filter();
@@ -335,7 +285,6 @@ export default {
       deleteHandler,
       windowRect: computed(() => store.state.app.windowRect),
       device: computed(() => store.state.app.device),
-      // changeStatus,
       searchShow,
       t,
     };

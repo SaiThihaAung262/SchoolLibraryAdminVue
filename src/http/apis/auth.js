@@ -9,36 +9,21 @@ export const getAdminList = (data) =>
 
 export const addAdminList = (data) =>
   http({
-    url: "/admin/add",
+    url: "/admin-users/create",
     method: "POST",
     data,
   });
+
 export const editAdminList = (data) =>
   http({
-    url: "/admin/edit",
+    url: "/admin-users/update",
     method: "POST",
     data,
   });
+
 export const deleteAdminList = (data) =>
   http({
-    url: "/admin/delete",
-    method: "POST",
-    data,
-  });
-
-/**
- * @Admin_log
- */
-export const getAdminLog = (data) =>
-  http({
-    url: "/admin/log/list",
-    method: "POST",
-    data,
-  });
-
-export const deleteAdminLog = (data) =>
-  http({
-    url: "/admin/log/delete",
+    url: "/admin-users/delete",
     method: "POST",
     data,
   });

@@ -15,7 +15,7 @@
         :closable="!item.meta.tagsViewAffix"
         :key="item.fullPath"
         v-for="item in visitedRoutes"
-        :label="t(`menu.${item.meta.title}`)"
+        :label="item.meta.title"
         :name="item.fullPath"
       ></el-tab-pane>
     </el-tabs>
