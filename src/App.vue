@@ -33,10 +33,6 @@ export default defineComponent({
   setup() {
     const store = useStore();
 
-    const refreshToken = () => {
-      store.dispatch("user/refreshToken");
-    };
-
     const { clientWidth, clientHeight } = useWindowSize();
     clientWidth.value <= 750 && store.commit("app/SET_DEVICE", "mobile");
     clientWidth.value > 750 && store.commit("app/SET_DEVICE", "desktop");
@@ -50,8 +46,6 @@ export default defineComponent({
     });
 
     onMounted(() => {
-      // setInterval(refreshToken, 180000); //automatic update access token in 3minutes if don't have action
-
       localStorage.setItem("pageIndicator", "标签切换"); //for breadcrumb
       store.state.app.pageIndicator = "标签切换";
     });

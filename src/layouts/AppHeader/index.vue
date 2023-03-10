@@ -36,16 +36,14 @@
     </div>
 
     <div class="header--right">
-      <el-popover placement="bottom-end" :width="100" trigger="hover">
+      <!-- <el-popover placement="bottom-end" :width="100" trigger="hover">
         <template #reference>
           <div class="language-change" v-if="language == 'English'">
             <img src="/us.png" alt="" />
-            <!-- <span>{{ language }}</span> -->
           </div>
 
           <div class="language-change" v-else>
             <img src="/china.png" alt="" />
-            <!-- <span>{{ language }}</span> -->
           </div>
         </template>
         <ul class="language-child">
@@ -62,7 +60,7 @@
             </div>
           </li>
         </ul>
-      </el-popover>
+      </el-popover> -->
 
       <font-awesome-icon
         icon="fa-solid fa-arrows-rotate"
@@ -77,88 +75,6 @@
       />
 
       <section class="user-info-section">
-        <!-- <el-popover
-          placement="bottom"
-          :width="300"
-          trigger="hover"
-          class="header-icon"
-          style="padding: 0"
-        >
-          <template #reference>
-            <el-badge
-              :value="noticeList.length"
-              :max="99"
-              type="success"
-              :hidden="noticeList.length === 0"
-            >
-              <i
-                class="el-icon-message-solid header-icon"
-                style="margin: 0"
-              ></i>
-            </el-badge>
-          </template>
-          <el-tabs>
-            <el-tab-pane label="未读消息" name="0"></el-tab-pane>
-          </el-tabs>
-          <div class="notice-popover-panel" v-if="noticeList.length !== 0">
-            <div v-for="item in noticeList" :key="item.id" class="notice-item">
-              <i class="el-icon-message-solid message-icon"></i>
-              <div class="notify-content">
-                <h2>{{ item.content }}</h2>
-                <p>{{ item.time }}</p>
-              </div>
-            </div>
-          </div>
-          <el-empty description="暂无消息" v-else></el-empty>
-          <div class="panel-btn-group" v-if="noticeList.length !== 0">
-            <el-button type="text" size="mini" @click="onClearNoticeClick"
-              >清除消息</el-button
-            >
-          </div>
-        </el-popover> -->
-        <!-- <el-popover placement="bottom" :width="250" trigger="hover">
-          <template #reference>
-            <i class="el-icon-s-tools header-icon"></i>
-          </template>
-          <el-tabs>
-            <el-tab-pane label="设置" name="0"></el-tab-pane>
-          </el-tabs>
-          <div class="setting-popover-panel">
-            <div class="setting-item">
-              <h2>页面指示</h2>
-              <el-radio-group
-                size="mini"
-                :modelValue="pageIndicator"
-                @change="onMenuTagSwitcherChange"
-              >
-                <el-radio-button label="标签切换"></el-radio-button>
-                <el-radio-button label="面包屑"></el-radio-button>
-              </el-radio-group>
-            </div>
-            <div class="setting-item" v-if="pageIndicator == '标签切换'">
-              <h2>页面状态</h2>
-              <el-radio-group
-                size="mini"
-                :modelValue="pageKeepAlive"
-                @change="onTogglePageKeepAlive"
-              >
-                <el-radio-button :label="1">缓存</el-radio-button>
-                <el-radio-button :label="0">不缓存</el-radio-button>
-              </el-radio-group>
-            </div>
-            <div class="setting-item">
-              <h2>侧边菜单</h2>
-              <el-radio-group
-                size="mini"
-                :modelValue="menuCollapse"
-                @change="onToggleMenuCollapse"
-              >
-                <el-radio-button :label="1">折叠</el-radio-button>
-                <el-radio-button :label="0">不折叠</el-radio-button>
-              </el-radio-group>
-            </div>
-          </div>
-        </el-popover> -->
         <el-popover
           placement="bottom-end"
           :width="150"
@@ -423,19 +339,17 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      http.user.getPermissions().then((res) => {
-        if (res.data.err_code == 0) {
-          let permissionsList = JSON.stringify(res.data.data.list);
-          localStorage.setItem("permissionList", permissionsList);
-          console.log("Here is secret ke;y", res.data.data.secret);
-          qr.value = `otpauth://totp/${
-            store.getters["app/userInfo"] ? store.getters["app/userInfo"] : "--"
-          }-pool-pledge?secret=${res.data.data.secret}&issuer=`;
-        }
-      });
-
-      // setInterval(refreshToken, 180000); //automatic update access token in 3minutes if don't have action
-      setInterval(refreshToken, 300000); //automatic update access token in 5minutes if don't have action
+      // http.user.getPermissions().then((res) => {
+      //   if (res.data.err_code == 0) {
+      //     let permissionsList = JSON.stringify(res.data.data.list);
+      //     localStorage.setItem("permissionList", permissionsList);
+      //     console.log("Here is secret ke;y", res.data.data.secret);
+      //     qr.value = `otpauth://totp/${
+      //       store.getters["app/userInfo"] ? store.getters["app/userInfo"] : "--"
+      //     }-pool-pledge?secret=${res.data.data.secret}&issuer=`;
+      //   }
+      // });
+      // setInterval(refreshToken, 300000); //automatic update access token in 5minutes if don't have action
     });
 
     return {
@@ -704,7 +618,7 @@ export default defineComponent({
   padding: 10px;
   background: $sidbarActiveBg;
   border-radius: 50%;
-  color: $title;
+  color: $white;
 }
 
 .refresh {
@@ -713,7 +627,7 @@ export default defineComponent({
   padding: 10px;
   background: $sidbarActiveBg;
   border-radius: 50%;
-  color: $title;
+  color: $white;
 }
 
 .language-change {

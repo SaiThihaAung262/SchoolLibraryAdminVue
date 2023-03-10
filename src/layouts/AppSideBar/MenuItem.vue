@@ -9,7 +9,7 @@
       <template v-slot:title>
         <font-awesome-icon :icon="item.icon" style="margin-right: 10px" />
 
-        <span>{{ t(`menu.${item.name}`) }}</span>
+        <span>{{ item.name }}</span>
       </template>
 
       <MenuItem :menuList="item.children"></MenuItem>
@@ -27,8 +27,8 @@
       </template>
 
       <template #title>
-        <span>{{ t(`menu.${item.name}`) }}</span></template
-      >
+        <span>{{ item.name }}</span>
+      </template>
     </el-menu-item>
   </template>
 </template>

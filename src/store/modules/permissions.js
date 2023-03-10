@@ -24,21 +24,21 @@ const mutations = {
 };
 
 const actions = {
-  setPermissions({ commit }) {
-    return new Promise((resolve, reject) => {
-      http.user
-        .getPermissions()
-        .then((response) => {
-          const { data } = response;
-          commit("SET_PERMISSIONS", data.permissions);
-          location.reload();
-          resolve();
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  },
+  // setPermissions({ commit }) {
+  //   return new Promise((resolve, reject) => {
+  //     http.user
+  //       .getPermissions()
+  //       .then((response) => {
+  //         const { data } = response;
+  //         commit("SET_PERMISSIONS", data.permissions);
+  //         location.reload();
+  //         resolve();
+  //       })
+  //       .catch((error) => {
+  //         reject(error);
+  //       });
+  //   });
+  // },
 };
 
 export default {

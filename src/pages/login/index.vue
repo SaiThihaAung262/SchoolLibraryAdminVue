@@ -54,17 +54,6 @@
                   ></el-input>
                 </el-form-item>
 
-                <el-form-item
-                  prop="googleauthcode"
-                  :label="t('common.googleVerifyCode')"
-                  v-if="state.isNeedGoogleAuth"
-                >
-                  <el-input
-                    :placeholder="t('common.googleVerifyCode')"
-                    v-model="form.googleauthcode"
-                  ></el-input>
-                </el-form-item>
-
                 <el-button
                   class="login-button"
                   type="primary"
@@ -80,34 +69,6 @@
         </div>
       </div>
     </div>
-
-    <el-dialog
-      v-model="state.googleAuthDialog"
-      title="Google authenticatin"
-      width="30%"
-    >
-      <div class="qr-con">
-        <qrcode-vue :value="qr" :size="500" level="H" />
-      </div>
-
-      <template #footer>
-        <span class="dialog-footer">
-          <el-input
-            class="google-auth-input"
-            placeholder="谷歌验证码"
-            v-model="form.googleauthcode"
-          ></el-input>
-          <div>
-            <el-button @click="state.googleAuthDialog = false"
-              >Cancel</el-button
-            >
-            <el-button type="primary" @click="confirmAuthDialog">
-              Confirm
-            </el-button>
-          </div>
-        </span>
-      </template>
-    </el-dialog>
   </div>
 </template>
 
@@ -159,57 +120,34 @@ const validatePassword = () => {
 
 const appName = computed(() => store.state.app.appName);
 
-const getCongig = () => {
-  http.user.getConfig().then((res) => {
-    if (res.data.err_code == 0) {
-      state.isNeedGoogleAuth = res.data.data.google_verfication;
-    }
-  });
-};
-
 const handleLogin = () => {
   loginFromRef.value.validate((valid) => {
     if (!valid) return;
     loading.value = true;
     let param = {
-      username: form.value.username,
+      name: form.value.username,
       password: form.value.password,
-      otp: form.value.googleauthcode,
     };
 
     http.user
       .login(param)
       .then((res) => {
         if (res.data.err_code == 0) {
-          if (res.data.data.secret_key) {
-            qr.value = `otpauth://totp/${res.data.data.username}-pool-pledge?secret=${res.data.data.secret_key}&issuer=`;
-            state.googleAuthDialog = true;
-          } else {
-            setToken(res.data.data.access_token);
-            setRefreshToken(res.data.data.refresh_token);
-            console.log("Here is refresh token", res.data.data.refresh_token);
+          console.log("Here is token", res.data.data.token);
+          setToken(res.data.data.token);
+          // setRefreshToken(res.data.data.refresh_token);
 
-            Cookies.set("timer_access", res.data.data.access_token, {
-              expires: 2,
-            });
+          Cookies.set("timer_access", res.data.data.token, {
+            expires: 2,
+          });
+          Cookies.set("userInfo", res.data.data.name);
 
-            Cookies.set("timer_refresh", res.data.data.refresh_token, {
-              expires: 0.0416667,
-            });
-
-            let permissionsList = JSON.stringify(res.data.data.permissions);
-
-            localStorage.setItem("permissionList", permissionsList);
-            store.dispatch("permissions/setPermissions");
-            ElMessage.success(res.data.err_msg);
-            loading.value = false;
-            router.push(query.value.redirect ? query.value.redirect : "/home");
-            // const jwtPayload = JSON.parse(
-            //   window.atob(res.data.data.access_token.split(".")[1])
-            // ); // get jwt payload
-            // Cookies.set("userInfo", jwtPayload.admin.username);
-            Cookies.set("userInfo", res.data.data.username);
-          }
+          // Cookies.set("timer_refresh", res.data.data.refresh_token, {
+          //   expires: 0.0416667,
+          // });
+          ElMessage.success(res.data.err_msg);
+          loading.value = false;
+          router.push(query.value.redirect ? query.value.redirect : "/home");
         } else {
           ElMessage.error(res.data.err_msg);
           loading.value = false;
@@ -223,64 +161,7 @@ const handleLogin = () => {
   });
 };
 
-const confirmAuthDialog = () => {
-  let param = {
-    username: form.value.username,
-    activated_2fa: true,
-    otp: form.value.googleauthcode,
-  };
-  http.user.activate2fa(param).then((res) => {
-    if (res.data.err_code == 0) {
-      setToken(res.data.data.access_token);
-      setRefreshToken(res.data.data.refresh_token);
-
-      Cookies.set("timer_access", res.data.data.access_token, {
-        expires: 2,
-      });
-
-      Cookies.set("timer_refresh", res.data.data.refresh_token, {
-        expires: 0.0416667,
-      });
-
-      let permissionsList = JSON.stringify(res.data.data.permissions);
-
-      localStorage.setItem("permissionList", permissionsList);
-      store.dispatch("permissions/setPermissions");
-      ElMessage.success(res.data.err_msg);
-      loading.value = false;
-      router.push(query.value.redirect ? query.value.redirect : "/home");
-      // const jwtPayload = JSON.parse(
-      //   window.atob(res.data.data.access_token.split(".")[1])
-      // ); // get jwt payload
-      Cookies.set("userInfo", res.data.data.username);
-      // router.push(query.value.redirect || "/home");
-    } else {
-      ElMessage.error();
-      loading.value = false;
-      removeToken();
-    }
-  });
-};
-
-const goPage = (val) => {
-  setTimeout(() => {
-    router.push(val);
-  }, 300);
-};
-
-const changeLan = (lan) => {
-  if (lan == "en") {
-    state.language = "English";
-    changeLang("en");
-  } else {
-    state.language = "Chinese";
-    changeLang("cn");
-  }
-};
-
-onMounted(() => {
-  getCongig();
-});
+onMounted(() => {});
 </script>
 <style lang="scss" scoped>
 @import "@/styles/auth.scss";

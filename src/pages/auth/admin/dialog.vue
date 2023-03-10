@@ -8,42 +8,22 @@
     <el-form label-width="120px" ref="formRef" :model="form">
       <el-form-item
         :label="t('table.userName')"
-        prop="username"
+        prop="name"
         :rules="[
           { required: true, message: t('common.require'), trigger: 'blur' },
         ]"
       >
-        <el-input v-model="form.username" placeholder="" />
+        <el-input v-model="form.name" placeholder="" />
       </el-form-item>
 
       <el-form-item
-        label="Email:"
+        :label="t('table.email')"
         prop="email"
         :rules="[
           { required: true, message: t('common.require'), trigger: 'blur' },
         ]"
       >
         <el-input v-model="form.email" placeholder="" />
-      </el-form-item>
-
-      <el-form-item
-        :label="t('table.identification')"
-        prop="identification"
-        :rules="[
-          { required: true, message: t('common.require'), trigger: 'blur' },
-        ]"
-      >
-        <el-input v-model="form.identification" placeholder="" />
-      </el-form-item>
-
-      <el-form-item
-        :label="t('table.nickName')"
-        prop="nickname"
-        :rules="[
-          { required: true, message: t('common.require'), trigger: 'blur' },
-        ]"
-      >
-        <el-input v-model="form.nickname" placeholder="" />
       </el-form-item>
 
       <el-form-item
@@ -54,49 +34,19 @@
           { required: true, message: t('common.require'), trigger: 'blur' },
         ]"
       >
-        <el-input v-model="form.password" placeholder="" />
+        <el-input v-model="form.password" placeholder="" type="password" />
       </el-form-item>
 
       <el-form-item :label="t('table.password')" v-else>
-        <el-input v-model="form.password" placeholder="" />
+        <el-input v-model="form.password" placeholder="" type="password" />
       </el-form-item>
 
-      <el-form-item :label="t('table.state')">
+      <!-- <el-form-item :label="t('table.state')">
         <el-radio-group v-model.number="form.status">
           <el-radio :label="1">{{ t("common.normal") }}</el-radio>
           <el-radio :label="2">{{ t("common.hide") }}</el-radio>
         </el-radio-group>
-      </el-form-item>
-
-      <el-form-item
-        :label="t('table.role') + ':'"
-        prop="role_id"
-        :rules="[
-          { required: true, message: t('common.require'), trigger: 'blur' },
-        ]"
-      >
-        <el-select
-          v-model="form.role_id"
-          :multiple="false"
-          allow-create
-          style="width: 100%"
-        >
-          <el-option
-            v-for="(item, index) in roleList"
-            :key="index"
-            :value="item.id"
-            :label="item.name"
-          />
-        </el-select>
-        <!-- <el-radio-group v-model="form.role_id">
-          <el-radio
-            v-for="(item, index) in roleList"
-            :key="index"
-            :label="item.id"
-            >{{ item.name }}</el-radio
-          >
-        </el-radio-group> -->
-      </el-form-item>
+      </el-form-item> -->
     </el-form>
     <template #footer>
       <span class="dialog-footer">
@@ -129,13 +79,9 @@ export default {
       uploadPercent: 0,
 
       form: {
-        username: "",
+        name: "",
         email: "",
-        identification: "",
-        nickname: "",
         password: "",
-        status: 1,
-        role_id: 1,
       },
       roleList: [],
       percentage: 0,
@@ -161,13 +107,9 @@ export default {
               if (res.data.err_code == 0) {
                 closeDialog(formRef);
                 state.form = {
-                  username: "",
+                  name: "",
                   email: "",
-                  identification: "",
-                  nickname: "",
                   password: "",
-                  status: 1,
-                  role_id: 1,
                 };
                 ElMessage.success(res.data.err_msg);
 
@@ -182,13 +124,9 @@ export default {
               if (res.data.err_code == 0) {
                 closeDialog(formRef);
                 state.form = {
-                  username: "",
+                  name: "",
                   email: "",
-                  identification: "",
-                  nickname: "",
                   password: "",
-                  status: 1,
-                  role_id: 1,
                 };
                 ElMessage.success(res.data.err_msg);
 
@@ -209,23 +147,15 @@ export default {
       if (props.data.hasOwnProperty("id")) {
         state.form = {
           id: props.data.id,
-          username: props.data.username,
+          name: props.data.name,
           email: props.data.email,
-          identification: props.data.identification,
-          nickname: props.data.nickname,
           password: props.data.password,
-          status: props.data.status,
-          role_id: parseInt(props.data.role_id),
         };
       } else {
         state.form = {
-          username: "",
+          name: "",
           email: "",
-          identification: "",
-          nickname: "",
           password: "",
-          status: 1,
-          role_id: 1,
         };
       }
     });

@@ -1,55 +1,21 @@
 <template>
   <div v-loading="isLoading">
     <div class="form" v-show="isShowSearch">
-      <!-- v-permission="3" -->
       <div class="form-content">
-        <el-form label-position="top" label-width="300px" v-permission="3">
+        <el-form label-position="top" label-width="300px">
           <el-form-item label="Id">
             <el-input placeholder="id" v-model="filterForm.id" />
           </el-form-item>
 
-          <el-form-item :label="t('table.userName')">
+          <!-- <el-form-item :label="t('table.userName')">
             <el-input
               :placeholder="t('table.userName')"
-              v-model="filterForm.username"
-            />
-          </el-form-item>
-
-          <el-form-item :label="t('table.logo')">
-            <el-input
-              :placeholder="t('table.logo')"
-              v-model="filterForm.logo"
+              v-model="filterForm.name"
             />
           </el-form-item>
 
           <el-form-item label="Email">
             <el-input placeholder="Email" v-model="filterForm.email" />
-          </el-form-item>
-
-          <el-form-item :label="t('table.nickName')">
-            <el-input
-              :placeholder="t('table.nickName')"
-              v-model="filterForm.nickname"
-            />
-          </el-form-item>
-
-          <el-form-item :label="t('table.state')">
-            <el-select
-              v-model="filterForm.state"
-              :multiple="false"
-              allow-create
-            >
-              <el-option
-                v-for="(item, index) in stateOptions"
-                :key="index"
-                :value="item.value"
-                :label="item.label"
-              />
-            </el-select>
-          </el-form-item>
-
-          <!-- <el-form-item label="最后登录">
-            <el-input placeholder="最后登录" v-model="filterForm.id" />
           </el-form-item> -->
 
           <div style="margin-top: 34px" class="buttonBox">
@@ -64,14 +30,13 @@
       </div>
     </div>
 
-    <div class="table" v-permission="3">
+    <div class="table">
       <div class="top-panel">
         <div class="left">
           <el-button
             @click="addNew"
             class="app-button"
             style="margin-bottom: 25px"
-            v-permission="1"
             ><font-awesome-icon
               icon="fa-solid fa-plus"
               style="margin-right: 5px"
@@ -84,7 +49,6 @@
             @click="searchShow"
             style="margin-bottom: 25px"
             type="info"
-            v-permission="3"
           >
             <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
           </el-button>
@@ -101,26 +65,14 @@
       >
         <el-table-column prop="id" label="ID" align="center" />
         <el-table-column
-          prop="username"
+          prop="name"
           :label="t('table.userName')"
           align="center"
         />
 
-        <el-table-column
-          prop="identification"
-          :label="t('table.identification')"
-          align="center"
-        />
-        <el-table-column
-          prop="nickname"
-          :label="t('table.nickName')"
-          align="center"
-        />
-        <!-- <el-table-column prop="" label="所属组别" align="center" /> -->
-
         <el-table-column prop="email" label="Email" align="center" />
 
-        <el-table-column :label="t('table.state')" align="center">
+        <!-- <el-table-column :label="t('table.state')" align="center">
           <template #default="scope">
             <el-switch
               v-model="scope.row.status"
@@ -129,10 +81,9 @@
               active-color="#13ce66"
               inactive-color="#ff4949"
               @change="changeStatus(scope.row)"
-              v-permission="2"
             />
           </template>
-        </el-table-column>
+        </el-table-column> -->
 
         <el-table-column
           :label="t('common.updateTime')"
@@ -161,7 +112,6 @@
                 style="margin-left: 10px; margin-bottom: 5px"
                 circle
                 @click="handleEdit(scope.row)"
-                v-permission="2"
               >
                 <font-awesome-icon icon="fa-solid fa-file-pen" />
               </el-button>
@@ -178,7 +128,6 @@
                 circle
                 style="margin-bottom: 5px"
                 @click="deleteHandler(scope.row.id)"
-                v-permission="4"
               >
                 <font-awesome-icon icon="fa-solid fa-trash" />
               </el-button>
@@ -236,9 +185,7 @@ export default {
     const state = reactive({
       isLoading: true,
       showDialog: false,
-      filterForm: {
-        state: "",
-      },
+      filterForm: {},
       pageList: [10, 20, 60, 80, 100],
       param: {
         page: 1,
@@ -248,20 +195,6 @@ export default {
         dialogTitle: "",
         dialogData: {},
       },
-      stateOptions: [
-        {
-          value: "",
-          label: t("common.all"),
-        },
-        {
-          value: 1,
-          label: t("common.normal"),
-        },
-        {
-          value: 2,
-          label: t("common.hide"),
-        },
-      ],
       isShowSearch: false,
       tableLists: [],
       roleList: [],
@@ -307,17 +240,11 @@ export default {
       if (state.filterForm.id) {
         state.param.id = parseInt(state.filterForm.id);
       }
-      if (state.filterForm.username) {
-        state.param.username = state.filterForm.username;
+      if (state.filterForm.name) {
+        state.param.name = state.filterForm.name;
       }
       if (state.filterForm.email) {
         state.param.email = state.filterForm.email;
-      }
-      if (state.filterForm.nickname) {
-        state.param.nickname = state.filterForm.nickname;
-      }
-      if (state.filterForm.state) {
-        state.param.state = parseInt(state.filterForm.state);
       }
     };
 

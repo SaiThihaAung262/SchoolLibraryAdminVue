@@ -1,12 +1,6 @@
-import { general } from "./general";
-import { memberManagement } from "./memberManagement";
 import { auth } from "./auth";
-import { platformWallet } from "./platformWallet";
 import { article } from "./aritcle";
-import { financialManagement } from "./financialManagement";
-import { statisticsManagement } from "./statisticsManagement";
-import { giftManagement } from "./giftManagement";
-import { transferFund } from "./transferFund";
+
 export const routes = [
   {
     name: "login",
@@ -40,13 +34,6 @@ export const routes = [
       tagsView: true,
     },
   },
-  ...statisticsManagement,
-  ...general,
-  ...memberManagement,
   ...auth,
-  ...platformWallet,
   ...article,
-  ...financialManagement,
-  ...giftManagement,
-  ...transferFund,
 ];

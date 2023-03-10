@@ -1,7 +1,7 @@
 <template>
   <div v-loading="tableList.tableData.isLoading">
     <div class="form" v-show="isShowSearch">
-      <div class="form-content" v-permission="8">
+      <div class="form-content">
         <el-form label-position="top" label-width="300px">
           <el-form-item label="Id">
             <el-input placeholder="Id" v-model="filterForm.id" />
@@ -33,14 +33,13 @@
       </div>
     </div>
 
-    <div class="table" v-permission="8">
+    <div class="table">
       <div class="top-panel">
         <div class="left">
           <el-button
             @click="addNew"
             class="app-button"
             style="margin-bottom: 25px"
-            v-permission="9"
             ><font-awesome-icon
               icon="fa-solid fa-plus"
               style="margin-right: 5px"
@@ -52,7 +51,6 @@
             type="danger"
             style="margin-bottom: 25px"
             :disabled="selectedLists.length == 0"
-            v-permission="11"
           >
             <font-awesome-icon
               icon="fa-solid fa-trash"
@@ -66,7 +64,6 @@
             @click="handlerExport"
             style="margin-bottom: 25px"
             type="warning"
-            v-permission="8"
           >
             <font-awesome-icon icon="fa-solid fa-download" />
           </el-button>
@@ -119,7 +116,6 @@
                 style="margin-left: 10px; margin-bottom: 5px"
                 circle
                 @click="handleEdit(scope.row)"
-                v-permission="10"
               >
                 <font-awesome-icon icon="fa-solid fa-file-pen" />
               </el-button>
@@ -136,7 +132,6 @@
                 circle
                 style="margin-bottom: 5px"
                 @click="deleteHandler(scope.row.id)"
-                v-permission="11"
               >
                 <font-awesome-icon icon="fa-solid fa-trash" />
               </el-button>

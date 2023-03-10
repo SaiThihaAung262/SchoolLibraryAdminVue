@@ -3,12 +3,9 @@ import http from "../axios";
 /**
  * @Admin
  */
+
 export const getAdminList = (data) =>
-  http({
-    url: "/admin/list",
-    method: "POST",
-    data,
-  });
+  http({ url: "admin-users/get-users", method: "GET", params: data });
 
 export const addAdminList = (data) =>
   http({

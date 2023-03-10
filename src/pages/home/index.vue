@@ -1,5 +1,5 @@
 <template>
-  <div class="home-container" v-loading="isLoading" v-permission="89">
+  <div class="home-container" v-loading="isLoading">
     <!-- First row -->
     <el-row :gutter="20">
       <el-col :lg="6" :md="12" :xs="24">

@@ -6,11 +6,11 @@ import { checkPermissions } from "@/utils/permissions";
 export const article = [
   {
     id: 114,
-    name: "articleManagement",
+    name: "Article Mangement",
     icon: "fa-solid fa-newspaper",
     url: "/article",
     type: "page",
-    permission: checkPermissions(114),
+    permission: true,
     perName: "article",
     children: [
       {
