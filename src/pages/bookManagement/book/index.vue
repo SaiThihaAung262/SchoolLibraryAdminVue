@@ -53,9 +53,27 @@
         style="width: 100%"
       >
         <el-table-column prop="id" label="ID" align="center" />
-        <el-table-column prop="name" label="Username" align="center" />
+        <el-table-column prop="title" label="Title" align="center" />
+        <el-table-column prop="author" label="Author" align="center" />
+        <el-table-column label="Category" align="center">
+          <template #default="scope">
+            {{ filterCategory(scope.row.category_id) }}
+          </template>
+        </el-table-column>
+        <el-table-column label="Image" align="center">
+          <template #default="scope">
+            <el-image
+              style="width: 35px; height: 35px"
+              :src="scope.row.book_image"
+            />
+            <!-- <img
+              src="/Users/thihaaung/Documents/SchoolLibraryProject/images/20230310132423.jpg"
+              alt=""
+            /> -->
+          </template>
+        </el-table-column>
 
-        <el-table-column prop="email" label="Email" align="center" />
+        <el-table-column prop="status" label="Status" align="center" />
 
         <el-table-column
           label="Operate"
@@ -124,6 +142,7 @@
     :title="dialog.dialogTitle"
     :data="dialog.dialogData"
     :roleList="roleList"
+    :categoryLists="cetegoryLists "
   />
 </template>
 
@@ -154,12 +173,17 @@ export default {
         page: 1,
         page_size: 10,
       },
+      cate_param: {
+        page: 1,
+        page_size: 500,
+      },
       dialog: {
         dialogTitle: "",
         dialogData: {},
       },
       isShowSearch: false,
       tableLists: [],
+      cetegoryLists: [],
       roleList: [],
       total: 0,
     });
@@ -168,7 +192,7 @@ export default {
 
     const getTableLists = () => {
       state.isLoading = true;
-      http.auth.getAdminList(state.param).then((res) => {
+      http.bookManagement.getBookList(state.param).then((res) => {
         if (res.data.err_code == 0) {
           console.log(res.data.data.list);
           state.tableLists = res.data.data.list;
@@ -177,6 +201,26 @@ export default {
           state.isLoading = false;
         }
       });
+    };
+
+    const getCategoryLists = () => {
+      state.isLoading = true;
+      http.bookManagement.getCategoryList(state.cate_param).then((res) => {
+        if (res.data.err_code == 0) {
+          console.log(res.data.data.list);
+          state.cetegoryLists = res.data.data.list;
+        }
+      });
+    };
+
+    const filterCategory = (val) => {
+      if (state.cetegoryLists) {
+        let myCategory = state.cetegoryLists.filter((item) => {
+          return item.id == val;
+        });
+
+        return myCategory[0]?.title;
+      }
     };
 
     const addNew = () => {
@@ -228,7 +272,7 @@ export default {
         draggable: true,
       })
         .then(() => {
-          http.auth.deleteAdminList({ admin_ids: [id] }).then((res) => {
+          http.auth.deleteBookList({ id: id }).then((res) => {
             if (res.data.err_code == 0) {
               ElMessage.success(res.data.err_msg);
               search();
@@ -261,6 +305,7 @@ export default {
 
     onMounted(() => {
       getTableLists();
+      getCategoryLists();
     });
 
     return {
@@ -277,6 +322,7 @@ export default {
       device: computed(() => store.state.app.device),
       searchShow,
       t,
+      filterCategory,
     };
   },
 };

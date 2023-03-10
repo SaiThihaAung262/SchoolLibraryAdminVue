@@ -62,3 +62,11 @@ export const refreshToken = (data) =>
 // 		method: 'POST',
 // 		data
 // 	});
+
+export const appUpload = (data, progress) =>
+  http({
+    url: "media/upload",
+    method: "POST",
+    data,
+    onUploadProgress: progress,
+  });

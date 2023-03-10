@@ -27,3 +27,27 @@ export const deleteCategoryList = (data) =>
     method: "POST",
     data,
   });
+
+export const getBookList = (data) =>
+  http({ url: "/book/get-books", method: "GET", params: data });
+
+export const addBookList = (data) =>
+  http({
+    url: "/book/create",
+    method: "POST",
+    data,
+  });
+
+export const editBookList = (data) =>
+  http({
+    url: "/book/update",
+    method: "POST",
+    data,
+  });
+
+export const deleteBookList = (data) =>
+  http({
+    url: "/book/delete",
+    method: "POST",
+    data,
+  });
