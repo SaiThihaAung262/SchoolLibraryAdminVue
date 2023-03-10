@@ -6,21 +6,6 @@
         <h1 class="admin-title">{{ appName }}</h1>
       </section>
 
-      <!-- <img
-        v-if="store.state.app.menuCollapse == 0"
-        src="/left-arrow.png"
-        alt="left arrow"
-        @click="collapseToggle"
-        class="hamburger-toggle"
-      />
-
-      <img
-        v-else
-        src="/right-arrow.png"
-        alt="right arrow"
-        @click="collapseToggle"
-        class="hamburger-toggle"
-      /> -->
       <font-awesome-icon
         icon="fa-solid fa-arrow-left"
         v-if="store.state.app.menuCollapse == 0"
@@ -603,7 +588,7 @@ export default defineComponent({
 
 .hamburger-toggle {
   cursor: pointer;
-  color: $white;
+  color: $title;
   font-size: 20px;
 }
 .el-button.is-link {

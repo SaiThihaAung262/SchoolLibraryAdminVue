@@ -7,16 +7,9 @@
             <el-input placeholder="id" v-model="filterForm.id" />
           </el-form-item>
 
-          <!-- <el-form-item label="Username">
-            <el-input
-              placeholder="Username"
-              v-model="filterForm.name"
-            />
+          <el-form-item label="Title">
+            <el-input placeholder="Title" v-model="filterForm.title" />
           </el-form-item>
-
-          <el-form-item label="Email">
-            <el-input placeholder="Email" v-model="filterForm.email" />
-          </el-form-item> -->
 
           <div style="margin-top: 34px" class="buttonBox">
             <el-button class="app-button" @click="search()">
@@ -213,11 +206,8 @@ export default {
       if (state.filterForm.id) {
         state.param.id = parseInt(state.filterForm.id);
       }
-      if (state.filterForm.name) {
-        state.param.name = state.filterForm.name;
-      }
-      if (state.filterForm.email) {
-        state.param.email = state.filterForm.email;
+      if (state.filterForm.title) {
+        state.param.title = state.filterForm.title;
       }
     };
 

@@ -7,17 +7,6 @@
             <el-input placeholder="id" v-model="filterForm.id" />
           </el-form-item>
 
-          <!-- <el-form-item label="Username">
-            <el-input
-              placeholder="Username"
-              v-model="filterForm.name"
-            />
-          </el-form-item>
-
-          <el-form-item label="Email">
-            <el-input placeholder="Email" v-model="filterForm.email" />
-          </el-form-item> -->
-
           <div style="margin-top: 34px" class="buttonBox">
             <el-button class="app-button" @click="search()">
               <font-awesome-icon
@@ -67,19 +56,6 @@
         <el-table-column prop="name" label="Username" align="center" />
 
         <el-table-column prop="email" label="Email" align="center" />
-
-        <!-- <el-table-column :label="t('table.state')" align="center">
-          <template #default="scope">
-            <el-switch
-              v-model="scope.row.status"
-              :active-value="1"
-              :inactive-value="2"
-              active-color="#13ce66"
-              inactive-color="#ff4949"
-              @change="changeStatus(scope.row)"
-            />
-          </template>
-        </el-table-column> -->
 
         <el-table-column
           label="Operate"
@@ -269,42 +245,6 @@ export default {
         });
     };
 
-    // const changeStatus = (row) => {
-    //   ElMessageBox.confirm(t("common.sureSave"), t("common.warning"), {
-    //     confirmButtonText: t("common.sure"),
-    //     cancelButtonText: t("common.cancle"),
-    //     type: "warning",
-    //     draggable: true,
-    //   })
-    //     .then(() => {
-    //       let param = {
-    //         id: row.id,
-    //         username: row.username,
-    //         email: row.email,
-    //         identification: row.identification,
-    //         nickname: row.nickname,
-    //         password: row.password,
-    //         status: row.status,
-    //       };
-
-    //       http.auth.editAdminList(param).then((res) => {
-    //         if (res.data.err_code == 0) {
-    //           ElMessage.success(res.data.err_msg);
-    //           search();
-    //         } else {
-    //           ElMessage.error(res.data.err_msg);
-    //         }
-    //       });
-    //     })
-    //     .catch(() => {
-    //       search();
-    //       ElMessage({
-    //         type: "info",
-    //         message: t("common.cancle"),
-    //       });
-    //     });
-    // };
-
     const search = () => {
       filter();
       state.param.page_size = 10;
@@ -335,7 +275,6 @@ export default {
       deleteHandler,
       windowRect: computed(() => store.state.app.windowRect),
       device: computed(() => store.state.app.device),
-      // changeStatus,
       searchShow,
       t,
     };
