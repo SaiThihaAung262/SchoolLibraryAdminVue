@@ -19,7 +19,7 @@
               >
                 <el-form-item
                   prop="username"
-                  :label="t('table.userName')"
+                  label="Username"
                   :rules="[
                     {
                       required: true,
@@ -37,7 +37,7 @@
 
                 <el-form-item
                   prop="password"
-                  :label="t('table.password')"
+                  label="Password"
                   :rules="[
                     {
                       required: true,
@@ -149,7 +149,7 @@ const handleLogin = () => {
           loading.value = false;
           router.push(query.value.redirect ? query.value.redirect : "/home");
         } else {
-          ElMessage.error(res.data.err_msg);
+          // ElMessage.error(res.data.err_msg);
           loading.value = false;
           removeToken();
         }

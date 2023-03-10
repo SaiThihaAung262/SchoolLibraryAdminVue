@@ -228,17 +228,27 @@ export default defineComponent({
       noticeTabActive.value = tab.paneName;
     };
 
+    // const onLogoutClick = () => {
+    //   http.user.logout().then((res) => {
+    //     if (res.data.err_code == 0) {
+    //       store.commit("tagsView/delAllVisitedRoutes");
+    //       store.dispatch("user/logout").then(() => {
+    //         resetRouter();
+    //         router.push({
+    //           path: "/login",
+    //         });
+    //       });
+    //     }
+    //   });
+    // };
+
     const onLogoutClick = () => {
-      http.user.logout().then((res) => {
-        if (res.data.err_code == 0) {
-          store.commit("tagsView/delAllVisitedRoutes");
-          store.dispatch("user/logout").then(() => {
-            resetRouter();
-            router.push({
-              path: "/login",
-            });
-          });
-        }
+      store.commit("tagsView/delAllVisitedRoutes");
+      store.dispatch("user/logout").then(() => {
+        resetRouter();
+        router.push({
+          path: "/login",
+        });
       });
     };
 
