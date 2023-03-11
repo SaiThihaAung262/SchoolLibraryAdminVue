@@ -1,5 +1,6 @@
 import { auth } from "./modules/auth";
 import { bookManagement } from "./modules/bookMangement";
+import { userManagement } from "./modules/userManagement";
 export const sidebarItem = [
   {
     id: 89,
@@ -18,6 +19,7 @@ export const sidebarItem = [
     ],
   },
   ...auth,
+  ...userManagement,
   ...bookManagement,
 ];
 
