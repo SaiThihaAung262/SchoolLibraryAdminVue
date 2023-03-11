@@ -4,19 +4,33 @@
       <div class="form-content">
         <el-form label-position="top" label-width="300px">
           <el-form-item label="Id">
-            <el-input placeholder="id" v-model="filterForm.id" />
+            <el-input placeholder="id" v-model="filterForm.uuid" />
           </el-form-item>
 
-          <!-- <el-form-item label="Username">
-            <el-input
-              placeholder="Username"
-              v-model="filterForm.name"
-            />
+          <el-form-item label="Username">
+            <el-input placeholder="Username" v-model="filterForm.name" />
           </el-form-item>
 
           <el-form-item label="Email">
             <el-input placeholder="Email" v-model="filterForm.email" />
-          </el-form-item> -->
+          </el-form-item>
+
+          <el-form-item label="Department">
+            <el-select
+              :multiple="false"
+              placeholder="Department"
+              style="width: 100%"
+              v-model="filterForm.department"
+              default-first-option
+            >
+              <el-option
+                v-for="item in departMentList"
+                :key="item"
+                :value="item.id"
+                :label="item.title"
+              />
+            </el-select>
+          </el-form-item>
 
           <div style="margin-top: 34px" class="buttonBox">
             <el-button class="app-button" @click="search()">
@@ -63,23 +77,29 @@
         height="65vh"
         style="width: 100%"
       >
-        <el-table-column prop="id" label="ID" align="center" />
-        <el-table-column prop="name" label="Username" align="center" />
+        <el-table-column prop="uuid" label="ID" align="center" width="100px" />
 
-        <el-table-column prop="email" label="Email" align="center" />
+        <el-table-column
+          prop="name"
+          label="Username"
+          align="center"
+          width="150px"
+        />
 
-        <!-- <el-table-column :label="t('table.state')" align="center">
+        <el-table-column
+          prop="email"
+          label="Email"
+          align="center"
+          width="250px"
+        />
+
+        <el-table-column label="Department" align="center" width="250px">
           <template #default="scope">
-            <el-switch
-              v-model="scope.row.status"
-              :active-value="1"
-              :inactive-value="2"
-              active-color="#13ce66"
-              inactive-color="#ff4949"
-              @change="changeStatus(scope.row)"
-            />
+            {{ filterDepartment(scope.row.department) }}
           </template>
-        </el-table-column> -->
+        </el-table-column>
+
+        <!-- filterDepartment -->
 
         <el-table-column
           label="Operate"
@@ -148,6 +168,7 @@
     :title="dialog.dialogTitle"
     :data="dialog.dialogData"
     :roleList="roleList"
+    :departmentLists="departMentList"
   />
 </template>
 
@@ -169,6 +190,8 @@ export default {
   setup() {
     const { t } = useI18n();
 
+    const store = useStore();
+
     const state = reactive({
       isLoading: true,
       showDialog: false,
@@ -186,13 +209,38 @@ export default {
       tableLists: [],
       roleList: [],
       total: 0,
+      departMentList: [
+        {
+          id: 1,
+          title: "Faculty of Computer Systems & Technologies",
+        },
+        {
+          id: 2,
+          title: "Faculty of Computer Science",
+        },
+        {
+          id: 3,
+          title: "Faculty of Information Science",
+        },
+        {
+          id: 4,
+          title:
+            "Department of Information Technology Supporting and Maintenance",
+        },
+        {
+          id: 5,
+          title: "Department of Physics",
+        },
+        {
+          id: 6,
+          title: "Department of Admistration and Finance",
+        },
+      ],
     });
-
-    const store = useStore();
 
     const getTableLists = () => {
       state.isLoading = true;
-      http.auth.getAdminList(state.param).then((res) => {
+      http.userManagement.getTeachers(state.param).then((res) => {
         if (res.data.err_code == 0) {
           console.log(res.data.data.list);
           state.tableLists = res.data.data.list;
@@ -201,6 +249,26 @@ export default {
           state.isLoading = false;
         }
       });
+    };
+
+    const filterDepartment = (val) => {
+      switch (val) {
+        case 1:
+          return "Faculty of Computer Systems & Technologies";
+        case 2:
+          return "Faculty of Computer Science";
+        case 3:
+          return "Faculty of Information Science";
+        case 4:
+          return "Department of Information Technology Supporting and Maintenance";
+        case 5:
+          return "Department of Physics";
+        case 6:
+          return "Department of Admistration and Finance";
+
+        default:
+          return "--";
+      }
     };
 
     const addNew = () => {
@@ -224,14 +292,18 @@ export default {
         page: 1,
       };
 
-      if (state.filterForm.id) {
-        state.param.id = parseInt(state.filterForm.id);
+      if (state.filterForm.uuid) {
+        state.param.uuid = parseInt(state.filterForm.uuid);
       }
       if (state.filterForm.name) {
         state.param.name = state.filterForm.name;
       }
       if (state.filterForm.email) {
         state.param.email = state.filterForm.email;
+      }
+
+      if (state.filterForm.department) {
+        state.param.department = parseInt(state.filterForm.department);
       }
     };
 
@@ -269,42 +341,6 @@ export default {
         });
     };
 
-    // const changeStatus = (row) => {
-    //   ElMessageBox.confirm(t("common.sureSave"), t("common.warning"), {
-    //     confirmButtonText: t("common.sure"),
-    //     cancelButtonText: t("common.cancle"),
-    //     type: "warning",
-    //     draggable: true,
-    //   })
-    //     .then(() => {
-    //       let param = {
-    //         id: row.id,
-    //         username: row.username,
-    //         email: row.email,
-    //         identification: row.identification,
-    //         nickname: row.nickname,
-    //         password: row.password,
-    //         status: row.status,
-    //       };
-
-    //       http.auth.editAdminList(param).then((res) => {
-    //         if (res.data.err_code == 0) {
-    //           ElMessage.success(res.data.err_msg);
-    //           search();
-    //         } else {
-    //           ElMessage.error(res.data.err_msg);
-    //         }
-    //       });
-    //     })
-    //     .catch(() => {
-    //       search();
-    //       ElMessage({
-    //         type: "info",
-    //         message: t("common.cancle"),
-    //       });
-    //     });
-    // };
-
     const search = () => {
       filter();
       state.param.page_size = 10;
@@ -335,9 +371,9 @@ export default {
       deleteHandler,
       windowRect: computed(() => store.state.app.windowRect),
       device: computed(() => store.state.app.device),
-      // changeStatus,
       searchShow,
       t,
+      filterDepartment,
     };
   },
 };

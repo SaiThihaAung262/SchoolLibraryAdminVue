@@ -23,6 +23,27 @@
       </el-form-item>
 
       <el-form-item
+        label="Category :"
+        prop="department"
+        :rules="[{ required: true, message: 'Required !', trigger: 'blur' }]"
+      >
+        <el-select
+          :multiple="false"
+          placeholder="Please select department"
+          style="width: 100%"
+          v-model="form.department"
+          default-first-option
+        >
+          <el-option
+            v-for="item in departmentLists"
+            :key="item"
+            :value="item.id"
+            :label="item.title"
+          />
+        </el-select>
+      </el-form-item>
+
+      <el-form-item
         v-if="dialogTitle == 'Add'"
         label="Password"
         prop="password"
@@ -34,13 +55,6 @@
       <el-form-item label="Password" v-else>
         <el-input v-model="form.password" placeholder="" type="password" />
       </el-form-item>
-
-      <!-- <el-form-item :label="t('table.state')">
-        <el-radio-group v-model.number="form.status">
-          <el-radio :label="1">{{ t("common.normal") }}</el-radio>
-          <el-radio :label="2">{{ t("common.hide") }}</el-radio>
-        </el-radio-group>
-      </el-form-item> -->
     </el-form>
     <template #footer>
       <span class="dialog-footer">
@@ -63,17 +77,19 @@ import { prop } from "dom7";
 import { useI18n } from "vue-i18n";
 export default {
   name: "Dialog",
-  props: ["show", "title", "data", "roleList"],
+  props: ["show", "title", "data", "roleList", "departmentLists"],
   setup(props, context) {
     const { t } = useI18n();
     const state = reactive({
       dialogTitle: "",
+      departmentLists: [],
       uploadPercent: 0,
 
       form: {
         name: "",
         email: "",
         password: "",
+        department: "",
       },
       roleList: [],
       percentage: 0,
@@ -94,14 +110,16 @@ export default {
     const submitDialog = (formRef) => {
       formRef.validate((valid) => {
         if (valid) {
+          state.form.department = parseInt(state.form.department);
           if (state.dialogTitle == "Add") {
-            http.auth.addAdminList(state.form).then((res) => {
+            http.userManagement.addTeacher(state.form).then((res) => {
               if (res.data.err_code == 0) {
                 closeDialog(formRef);
                 state.form = {
                   name: "",
                   email: "",
                   password: "",
+                  department: "",
                 };
                 ElMessage.success(res.data.err_msg);
 
@@ -112,13 +130,14 @@ export default {
               }
             });
           } else {
-            http.auth.editAdminList(state.form).then((res) => {
+            http.userManagement.editTeacher(state.form).then((res) => {
               if (res.data.err_code == 0) {
                 closeDialog(formRef);
                 state.form = {
                   name: "",
                   email: "",
                   password: "",
+                  department: "",
                 };
                 ElMessage.success(res.data.err_msg);
 
@@ -136,18 +155,22 @@ export default {
     onUpdated(() => {
       state.dialogTitle = props.title;
       state.roleList = props.roleList;
+      state.departmentLists = props.departmentLists;
       if (props.data.hasOwnProperty("id")) {
         state.form = {
           id: props.data.id,
+          uuid: props.data.uuid,
           name: props.data.name,
           email: props.data.email,
           password: props.data.password,
+          department: props.data.department,
         };
       } else {
         state.form = {
           name: "",
           email: "",
           password: "",
+          department: "",
         };
       }
     });
