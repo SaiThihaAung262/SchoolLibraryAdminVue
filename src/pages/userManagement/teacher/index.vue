@@ -324,7 +324,7 @@ export default {
         draggable: true,
       })
         .then(() => {
-          http.auth.deleteAdminList({ id: id }).then((res) => {
+          http.userManagement.deleteTeacher({ id: id }).then((res) => {
             if (res.data.err_code == 0) {
               ElMessage.success(res.data.err_msg);
               search();
