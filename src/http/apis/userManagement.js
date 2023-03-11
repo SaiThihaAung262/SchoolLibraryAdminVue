@@ -29,25 +29,25 @@ export const deleteTeacher = (data) =>
   });
 
 export const getStudents = (data) =>
-  http({ url: "/book/get-books", method: "GET", params: data });
+  http({ url: "/student/get-students", method: "GET", params: data });
 
 export const addStudent = (data) =>
   http({
-    url: "/book/create",
+    url: "/student/create",
     method: "POST",
     data,
   });
 
 export const editStudent = (data) =>
   http({
-    url: "/book/update",
+    url: "/student/update",
     method: "POST",
     data,
   });
 
 export const deleteStudent = (data) =>
   http({
-    url: "/book/delete",
+    url: "/student/delete",
     method: "POST",
     data,
   });

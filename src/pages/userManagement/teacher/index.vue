@@ -77,23 +77,13 @@
         height="65vh"
         style="width: 100%"
       >
-        <el-table-column prop="uuid" label="ID" align="center" width="100px" />
+        <el-table-column prop="uuid" label="ID" align="center" />
 
-        <el-table-column
-          prop="name"
-          label="Username"
-          align="center"
-          width="150px"
-        />
+        <el-table-column prop="name" label="Username" align="center" />
 
-        <el-table-column
-          prop="email"
-          label="Email"
-          align="center"
-          width="250px"
-        />
+        <el-table-column prop="email" label="Email" align="center" />
 
-        <el-table-column label="Department" align="center" width="250px">
+        <el-table-column label="Department" align="center" width="350px">
           <template #default="scope">
             {{ filterDepartment(scope.row.department) }}
           </template>

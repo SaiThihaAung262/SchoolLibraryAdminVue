@@ -4,19 +4,37 @@
       <div class="form-content">
         <el-form label-position="top" label-width="300px">
           <el-form-item label="Id">
-            <el-input placeholder="id" v-model="filterForm.id" />
+            <el-input placeholder="id" v-model="filterForm.uuid" />
           </el-form-item>
 
-          <!-- <el-form-item label="Username">
-            <el-input
-              placeholder="Username"
-              v-model="filterForm.name"
-            />
+          <el-form-item label="Username">
+            <el-input placeholder="Username" v-model="filterForm.name" />
           </el-form-item>
 
           <el-form-item label="Email">
             <el-input placeholder="Email" v-model="filterForm.email" />
-          </el-form-item> -->
+          </el-form-item>
+
+          <el-form-item label="Role number">
+            <el-input placeholder="Role numbeer" v-model="filterForm.role_no" />
+          </el-form-item>
+
+          <el-form-item label="Year">
+            <el-select
+              :multiple="false"
+              placeholder="Year"
+              style="width: 100%"
+              v-model="filterForm.year"
+              default-first-option
+            >
+              <el-option
+                v-for="item in yearLists"
+                :key="item"
+                :value="item.id"
+                :label="item.title"
+              />
+            </el-select>
+          </el-form-item>
 
           <div style="margin-top: 34px" class="buttonBox">
             <el-button class="app-button" @click="search()">
@@ -63,23 +81,23 @@
         height="65vh"
         style="width: 100%"
       >
-        <el-table-column prop="id" label="ID" align="center" />
+        <el-table-column prop="uuid" label="ID" align="center" />
         <el-table-column prop="name" label="Username" align="center" />
 
-        <el-table-column prop="email" label="Email" align="center" />
+        <el-table-column prop="role_no" label="Role no" align="center" />
 
-        <!-- <el-table-column :label="t('table.state')" align="center">
+        <el-table-column label="Year" align="center">
           <template #default="scope">
-            <el-switch
-              v-model="scope.row.status"
-              :active-value="1"
-              :inactive-value="2"
-              active-color="#13ce66"
-              inactive-color="#ff4949"
-              @change="changeStatus(scope.row)"
-            />
+            {{ filterYear(scope.row.year) }}
           </template>
-        </el-table-column> -->
+        </el-table-column>
+
+        <el-table-column
+          prop="email"
+          label="Email"
+          align="center"
+          width="300px"
+        />
 
         <el-table-column
           label="Operate"
@@ -148,6 +166,7 @@
     :title="dialog.dialogTitle"
     :data="dialog.dialogData"
     :roleList="roleList"
+    :yearLists="yearLists"
   />
 </template>
 
@@ -186,13 +205,53 @@ export default {
       tableLists: [],
       roleList: [],
       total: 0,
+      yearLists: [
+        {
+          id: 1,
+          title: "First Year",
+        },
+        {
+          id: 2,
+          title: "Second year",
+        },
+        {
+          id: 3,
+          title: "Third Year",
+        },
+        {
+          id: 4,
+          title: "Fourth Year",
+        },
+        {
+          id: 5,
+          title: "Final Year",
+        },
+      ],
     });
+
+    const filterYear = (val) => {
+      switch (val) {
+        case 1:
+          return "First Year";
+        case 2:
+          return "Second Year";
+        case 3:
+          return "Third Year";
+        case 4:
+          return "Fourth Year";
+        case 5:
+          return "Final Year";
+
+        default:
+          return "--";
+      }
+    };
 
     const store = useStore();
 
     const getTableLists = () => {
       state.isLoading = true;
-      http.auth.getAdminList(state.param).then((res) => {
+      http.userManagement.getStudents(state.param).then((res) => {
         if (res.data.err_code == 0) {
           console.log(res.data.data.list);
           state.tableLists = res.data.data.list;
@@ -224,14 +283,24 @@ export default {
         page: 1,
       };
 
-      if (state.filterForm.id) {
-        state.param.id = parseInt(state.filterForm.id);
+      if (state.filterForm.uuid) {
+        state.param.uuid = parseInt(state.filterForm.uuid);
       }
+
       if (state.filterForm.name) {
         state.param.name = state.filterForm.name;
       }
+
       if (state.filterForm.email) {
         state.param.email = state.filterForm.email;
+      }
+
+      if (state.filterForm.role_no) {
+        state.param.role_no = state.filterForm.role_no;
+      }
+
+      if (state.filterForm.year) {
+        state.param.year = parseInt(state.filterForm.year);
       }
     };
 
@@ -252,7 +321,7 @@ export default {
         draggable: true,
       })
         .then(() => {
-          http.auth.deleteAdminList({ id: id }).then((res) => {
+          http.auth.deleteStudent({ id: id }).then((res) => {
             if (res.data.err_code == 0) {
               ElMessage.success(res.data.err_msg);
               search();
@@ -268,42 +337,6 @@ export default {
           });
         });
     };
-
-    // const changeStatus = (row) => {
-    //   ElMessageBox.confirm(t("common.sureSave"), t("common.warning"), {
-    //     confirmButtonText: t("common.sure"),
-    //     cancelButtonText: t("common.cancle"),
-    //     type: "warning",
-    //     draggable: true,
-    //   })
-    //     .then(() => {
-    //       let param = {
-    //         id: row.id,
-    //         username: row.username,
-    //         email: row.email,
-    //         identification: row.identification,
-    //         nickname: row.nickname,
-    //         password: row.password,
-    //         status: row.status,
-    //       };
-
-    //       http.auth.editAdminList(param).then((res) => {
-    //         if (res.data.err_code == 0) {
-    //           ElMessage.success(res.data.err_msg);
-    //           search();
-    //         } else {
-    //           ElMessage.error(res.data.err_msg);
-    //         }
-    //       });
-    //     })
-    //     .catch(() => {
-    //       search();
-    //       ElMessage({
-    //         type: "info",
-    //         message: t("common.cancle"),
-    //       });
-    //     });
-    // };
 
     const search = () => {
       filter();
@@ -338,6 +371,7 @@ export default {
       // changeStatus,
       searchShow,
       t,
+      filterYear,
     };
   },
 };

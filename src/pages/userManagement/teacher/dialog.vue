@@ -23,7 +23,7 @@
       </el-form-item>
 
       <el-form-item
-        label="Category :"
+        label="Department :"
         prop="department"
         :rules="[{ required: true, message: 'Required !', trigger: 'blur' }]"
       >
