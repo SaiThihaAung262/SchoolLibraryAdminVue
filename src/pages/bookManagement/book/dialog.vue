@@ -35,12 +35,33 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item
+      <!-- <el-form-item
         label="Status: "
         prop="status"
         :rules="[{ required: true, message: 'Required !', trigger: 'blur' }]"
       >
         <el-input v-model="form.status" placeholder="" />
+      </el-form-item> -->
+
+      <el-form-item
+        label="Status :"
+        prop="status"
+        :rules="[{ required: true, message: 'Required !', trigger: 'blur' }]"
+      >
+        <el-select
+          :multiple="false"
+          placeholder="please select status"
+          style="width: 100%"
+          v-model="form.status"
+          default-first-option
+        >
+          <el-option
+            v-for="item in statusOptions"
+            :key="item"
+            :value="item.id"
+            :label="item.title"
+          />
+        </el-select>
       </el-form-item>
 
       <el-form-item
@@ -95,7 +116,7 @@ import axios from "axios";
 
 export default {
   name: "Dialog",
-  props: ["show", "title", "data", "categoryLists"],
+  props: ["show", "title", "data", "categoryLists", "statusOptions"],
   setup(props, context) {
     const state = reactive({
       categoryLists: [],
@@ -104,13 +125,14 @@ export default {
       form: {
         title: "",
         category_id: "",
-        status: "",
+        status: 1,
         author: "",
         summary: "",
         book_image: "",
       },
       percentage: 0,
       fileList: [],
+      statusOptions: [],
     });
 
     const formRef = ref();
@@ -142,7 +164,7 @@ export default {
                 state.form = {
                   title: "",
                   category_id: "",
-                  status: "",
+                  status: 1,
                   author: "",
                   summary: "",
                   book_image: "",
@@ -162,7 +184,7 @@ export default {
                 state.form = {
                   title: "",
                   category_id: "",
-                  status: "",
+                  status: 1,
                   author: "",
                   summary: "",
                   book_image: "",
@@ -238,6 +260,7 @@ export default {
     onUpdated(() => {
       state.dialogTitle = props.title;
       state.categoryLists = props.categoryLists;
+      state.statusOptions = props.statusOptions;
       if (props.data.hasOwnProperty("id")) {
         state.form.id = props.data.id;
         state.form.title = props.data.title;
@@ -256,7 +279,7 @@ export default {
         state.form = {
           title: "",
           category_id: "",
-          status: "",
+          status: 1,
           author: "",
           summary: "",
           book_image: "",

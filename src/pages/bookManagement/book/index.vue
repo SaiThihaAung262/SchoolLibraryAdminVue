@@ -3,8 +3,46 @@
     <div class="form" v-show="isShowSearch">
       <div class="form-content">
         <el-form label-position="top" label-width="300px">
-          <el-form-item label="Id">
-            <el-input placeholder="id" v-model="filterForm.id" />
+          <el-form-item label="ID">
+            <el-input placeholder="ID" v-model="filterForm.uuid" />
+          </el-form-item>
+
+          <el-form-item label="Title">
+            <el-input placeholder="Title" v-model="filterForm.title" />
+          </el-form-item>
+
+          <el-form-item label="Category">
+            <el-select
+              :multiple="false"
+              placeholder="Category"
+              style="width: 100%"
+              v-model="filterForm.category_id"
+              default-first-option
+            >
+              <el-option
+                v-for="item in cetegoryLists"
+                :key="item"
+                :value="item.id"
+                :label="item.title"
+              />
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="Status">
+            <el-select
+              :multiple="false"
+              placeholder="Status"
+              style="width: 100%"
+              v-model="filterForm.status"
+              default-first-option
+            >
+              <el-option
+                v-for="item in statusOptions"
+                :key="item"
+                :value="item.id"
+                :label="item.title"
+              />
+            </el-select>
           </el-form-item>
 
           <div style="margin-top: 34px" class="buttonBox">
@@ -73,7 +111,31 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="status" label="Status" align="center" />
+        <el-table-column prop="status" label="Status" align="center">
+          <template #default="scope">
+            <!-- {{ filterStatus(scope.row.status) }} -->
+
+            <el-tag
+              class="ml-2"
+              type="success"
+              v-if="scope.row.status == 1"
+              effect="dark"
+              >Available</el-tag
+            >
+            <el-tag
+              class="ml-2"
+              type="danger"
+              v-if="scope.row.status == 2"
+              effect="dark"
+              >Damage or Lost</el-tag
+            >
+          </template>
+        </el-table-column>
+        <el-table-column label="Create Time" align="center">
+          <template #default="scope">
+            {{ dateFormat(scope.row.CreatedAt) }}
+          </template>
+        </el-table-column>
 
         <el-table-column
           label="Operate"
@@ -142,7 +204,8 @@
     :title="dialog.dialogTitle"
     :data="dialog.dialogData"
     :roleList="roleList"
-    :categoryLists="cetegoryLists "
+    :categoryLists="cetegoryLists"
+    :statusOptions="statusOptions"
   />
 </template>
 
@@ -186,9 +249,30 @@ export default {
       cetegoryLists: [],
       roleList: [],
       total: 0,
+      statusOptions: [
+        {
+          id: 1,
+          title: "Available",
+        },
+        {
+          id: 2,
+          title: "Lost or Damage",
+        },
+      ],
     });
 
     const store = useStore();
+
+    const filterStatus = (val) => {
+      switch (val) {
+        case 1:
+          return "Available";
+        case 2:
+          return "Lost or Damage";
+        default:
+          return "--";
+      }
+    };
 
     const getTableLists = () => {
       state.isLoading = true;
@@ -323,6 +407,7 @@ export default {
       searchShow,
       t,
       filterCategory,
+      filterStatus,
     };
   },
 };

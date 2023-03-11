@@ -99,6 +99,12 @@
           width="300px"
         />
 
+        <el-table-column label="Register Time" align="center">
+          <template #default="scope">
+            {{ dateFormat(scope.row.CreatedAt) }}
+          </template>
+        </el-table-column>
+
         <el-table-column
           label="Operate"
           align="center"

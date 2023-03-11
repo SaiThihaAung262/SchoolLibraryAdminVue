@@ -83,9 +83,15 @@
 
         <el-table-column prop="email" label="Email" align="center" />
 
-        <el-table-column label="Department" align="center" width="350px">
+        <el-table-column label="Department" align="center" width="300px">
           <template #default="scope">
             {{ filterDepartment(scope.row.department) }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="Register Time" align="center">
+          <template #default="scope">
+            {{ dateFormat(scope.row.CreatedAt) }}
           </template>
         </el-table-column>
 
