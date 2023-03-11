@@ -83,12 +83,10 @@
                 :size="40"
                 src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
               />
+
               <div>{{ userInfo || "--" }}</div>
-              <!-- <el-tag size="mini" style="margin-top: 5px">{{
-                userInfo.role || "--"
-              }}</el-tag> -->
             </div>
-            <div class="info-item">
+            <!-- <div class="info-item">
               <el-button
                 type=""
                 size="default"
@@ -98,7 +96,7 @@
               >
                 {{ t("common.googleVerification") }}
               </el-button>
-            </div>
+            </div> -->
             <div class="info-item">
               <el-button type="" @click="onLogoutClick" style="color: red" link>
                 <font-awesome-icon
@@ -106,7 +104,7 @@
                   style="margin-right: 10px"
                   class="fa-lg"
                 />
-                {{ t("common.signOut") }}
+                Sign Out
               </el-button>
             </div>
           </div>
@@ -189,40 +187,6 @@ export default defineComponent({
       store.commit("app/SET_PAGE_KEEP_ALIVE", val);
     };
 
-    //通知信息
-    const noticeList = ref([
-      {
-        id: 1,
-        content: "这是一条短通知。",
-        time: "2021-6-10",
-      },
-      {
-        id: 2,
-        content: "这是一条短通知。",
-        time: "2021-6-10",
-      },
-      {
-        id: 3,
-        content:
-          "这是一条长长长长长长长长长长长长长长长长长长长长长长长长通知。",
-        time: "2021-6-10",
-      },
-      {
-        id: 4,
-        content:
-          "这是一条长长长长长长长长长长长长长长长长长长长长长长长长通知。",
-        time: "2021-6-10",
-      },
-      {
-        id: 5,
-        content:
-          "这是一条长长长长长长长长长长长长长长长长长长长长长长长长通知。",
-        time: "2021-6-10",
-      },
-    ]);
-    const onClearNoticeClick = () => {
-      noticeList.value.splice(0, noticeList.value.length);
-    };
     const noticeTabActive = ref("0");
     const onNoticeTabChange = (tab) => {
       noticeTabActive.value = tab.paneName;
@@ -291,17 +255,6 @@ export default defineComponent({
       searchInstance.loading = false;
     };
 
-    //模块切换
-    // const activeModule = ref(route.query.module);
-    // const onModuleSelect = (index) => {
-    //   router.replace({
-    //     query: {
-    //       module: index,
-    //     },
-    //   });
-    //   activeModule.value = index;
-    // };
-
     function collapseToggle() {
       toggler = !toggler;
       if (toggler == true) {
@@ -350,8 +303,6 @@ export default defineComponent({
     return {
       ...toRefs(state),
       toggle,
-      noticeList,
-      onClearNoticeClick,
       onLogoutClick,
       onMenuTagSwitcherChange,
       onToggleMenuCollapse,
