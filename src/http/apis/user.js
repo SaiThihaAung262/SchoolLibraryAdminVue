@@ -30,9 +30,9 @@ export const getExchangeList = (data) =>
 
 export const getDashboard = (data) =>
   http({
-    url: "/dashboard",
-    method: "POST",
-    data,
+    url: "/admin-users/dashboard",
+    method: "GET",
+    params: data,
   });
 
 export const activate2fa = (data) =>

@@ -13,7 +13,7 @@ export const bookManagement = [
       {
         id: 101,
         name: "Categories",
-        icon: "fa-solid fa-user",
+        icon: "fa-solid fa-volleyball",
         type: "page",
         permission: true,
         perName: "categories",
