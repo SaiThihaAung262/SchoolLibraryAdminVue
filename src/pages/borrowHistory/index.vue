@@ -123,6 +123,18 @@
           </template>
         </el-table-column>
 
+        <el-table-column label="Book ID" align="center" width="130">
+          <template #default="scope">
+            {{ scope.row.book_data.uuid }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="Book Title" align="center" width="250">
+          <template #default="scope">
+            {{ scope.row.book_data.title }}
+          </template>
+        </el-table-column>
+
         <el-table-column label="Department" align="center" width="300">
           <template #default="scope">
             {{
@@ -155,12 +167,11 @@
           </template>
         </el-table-column>
 
-        <el-table-column label="Expire Time" align="center" width="170">
+        <!-- <el-table-column label="Expire Time" align="center" width="170">
           <template #default="scope">
-            {{ dateFormat(scope.row.expired_at) }}
-            <!-- {{ originalDate(scope.row.expired_at) }} -->
+            {{ originalDate(scope.row.expired_at) }}
           </template>
-        </el-table-column>
+        </el-table-column> -->
 
         <el-table-column
           label="Operate"
@@ -176,7 +187,7 @@
               @click="changeStatus(scope.row)"
               v-if="scope.row.status == 1"
             >
-              Change Status
+              Return
             </el-button>
             <!-- <el-tooltip
               class="box-item"
@@ -423,6 +434,8 @@ export default {
             id: row.id,
             type: row.type,
             status: 2,
+            user_uuid: row.user_data.uuid,
+            book_uuid: row.book_data.uuid,
           };
           http.borrowHistory.changeStatus(param).then((res) => {
             if (res.data.err_code == 0) {

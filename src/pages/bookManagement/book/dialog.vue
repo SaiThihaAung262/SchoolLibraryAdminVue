@@ -5,7 +5,7 @@
     draggable
     :title="dialogTitle"
   >
-    <el-form label-width="100px" ref="formRef" :model="form">
+    <el-form label-width="150px" ref="formRef" :model="form">
       <el-form-item
         label="Title"
         prop="title"
@@ -70,6 +70,14 @@
         :rules="[{ required: true, message: 'Required !', trigger: 'blur' }]"
       >
         <el-input v-model="form.author" placeholder="" />
+      </el-form-item>
+
+      <el-form-item
+        label="Available Qty: "
+        prop="available_qty"
+        :rules="[{ required: true, message: 'Required !', trigger: 'blur' }]"
+      >
+        <el-input v-model="form.available_qty" placeholder="" />
       </el-form-item>
 
       <el-form-item
@@ -154,6 +162,7 @@ export default {
           console.log("Here is submit 22222");
           state.form.category_id = parseInt(state.form.category_id);
           state.form.status = parseInt(state.form.status);
+          state.form.available_qty = parseInt(state.form.available_qty);
 
           if (state.dialogTitle == "Add") {
             console.log("Here is submit 333333");
@@ -269,6 +278,8 @@ export default {
         state.form.author = props.data.author;
         state.form.summary = props.data.summary;
         state.form.book_image = props.data.book_image;
+        state.form.available_qty = props.data.available_qty;
+        state.form.borrow_qty = props.data.borrow_qty;
 
         if (props.data.book_image) {
           state.fileList.push({
@@ -283,6 +294,7 @@ export default {
           author: "",
           summary: "",
           book_image: "",
+          available_qty: "",
         };
       }
     });

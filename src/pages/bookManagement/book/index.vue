@@ -98,6 +98,14 @@
             {{ filterCategory(scope.row.category_id) }}
           </template>
         </el-table-column>
+
+        <el-table-column
+          prop="available_qty"
+          label="Available"
+          align="center"
+        />
+        <el-table-column prop="borrow_qty" label="Borrow Qty" align="center" />
+
         <el-table-column label="Image" align="center">
           <template #default="scope">
             <el-image
@@ -128,6 +136,14 @@
               v-if="scope.row.status == 2"
               effect="dark"
               >Damage or Lost</el-tag
+            >
+
+            <el-tag
+              class="ml-2"
+              type="warning"
+              v-if="scope.row.status == 3"
+              effect="dark"
+              >All borrow</el-tag
             >
           </template>
         </el-table-column>
