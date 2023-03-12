@@ -2,7 +2,7 @@ import { auth } from "./auth";
 import { article } from "./aritcle";
 import { bookManagement } from "./bookManagement";
 import { userManagement } from "./userManagement";
-
+import { borrowHistory } from "./borrowHistory";
 
 export const routes = [
   {
@@ -41,4 +41,5 @@ export const routes = [
   ...article,
   ...bookManagement,
   ...userManagement,
+  ...borrowHistory,
 ];

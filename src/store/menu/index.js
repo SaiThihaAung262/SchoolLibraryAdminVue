@@ -1,6 +1,8 @@
 import { auth } from "./modules/auth";
 import { bookManagement } from "./modules/bookMangement";
 import { userManagement } from "./modules/userManagement";
+import { borrowHistory } from "./modules/borrowHistory";
+
 export const sidebarItem = [
   {
     id: 89,
@@ -21,6 +23,7 @@ export const sidebarItem = [
   ...auth,
   ...userManagement,
   ...bookManagement,
+  ...borrowHistory,
 ];
 
 localStorage.setItem("menu", JSON.stringify(sidebarItem));

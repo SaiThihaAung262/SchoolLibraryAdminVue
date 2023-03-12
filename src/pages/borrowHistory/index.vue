@@ -3,46 +3,12 @@
     <div class="form" v-show="isShowSearch">
       <div class="form-content">
         <el-form label-position="top" label-width="300px">
-          <el-form-item label="ID">
-            <el-input placeholder="ID" v-model="filterForm.uuid" />
+          <el-form-item label="Id">
+            <el-input placeholder="id" v-model="filterForm.id" />
           </el-form-item>
 
           <el-form-item label="Title">
             <el-input placeholder="Title" v-model="filterForm.title" />
-          </el-form-item>
-
-          <el-form-item label="Category">
-            <el-select
-              :multiple="false"
-              placeholder="Category"
-              style="width: 100%"
-              v-model="filterForm.category_id"
-              default-first-option
-            >
-              <el-option
-                v-for="item in cetegoryLists"
-                :key="item"
-                :value="item.id"
-                :label="item.title"
-              />
-            </el-select>
-          </el-form-item>
-
-          <el-form-item label="Status">
-            <el-select
-              :multiple="false"
-              placeholder="Status"
-              style="width: 100%"
-              v-model="filterForm.status"
-              default-first-option
-            >
-              <el-option
-                v-for="item in statusOptions"
-                :key="item"
-                :value="item.id"
-                :label="item.title"
-              />
-            </el-select>
           </el-form-item>
 
           <div style="margin-top: 34px" class="buttonBox">
@@ -90,54 +56,90 @@
         height="65vh"
         style="width: 100%"
       >
-        <el-table-column prop="uuid" label="ID" align="center" />
-        <el-table-column prop="title" label="Title" align="center" />
-        <el-table-column prop="author" label="Author" align="center" />
-        <el-table-column label="Category" align="center">
+        <el-table-column prop="id" label="ID" align="center" />
+
+        <el-table-column label="User ID" align="center" width="100">
           <template #default="scope">
-            {{ filterCategory(scope.row.category_id) }}
-          </template>
-        </el-table-column>
-        <el-table-column label="Image" align="center">
-          <template #default="scope">
-            <el-image
-              style="width: 35px; height: 35px"
-              :src="scope.row.book_image"
-            />
-            <!-- <img
-              src="/Users/thihaaung/Documents/SchoolLibraryProject/images/20230310132423.jpg"
-              alt=""
-            /> -->
+            {{ scope.row.user_data.uuid }}
           </template>
         </el-table-column>
 
-        <el-table-column prop="status" label="Status" align="center">
+        <el-table-column label="Username" align="center" width="200">
           <template #default="scope">
-            <!-- {{ filterStatus(scope.row.status) }} -->
+            {{ scope.row.user_data.name }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="Email" align="center" width="250">
+          <template #default="scope">
+            {{ scope.row.user_data.email }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="Borrower Type" align="center" width="150">
+          <template #default="scope">
+            <el-tag
+              type="primary"
+              class="mx-1"
+              effect="dark"
+              v-if="scope.row.type == 1"
+              round
+            >
+              Teacher
+            </el-tag>
 
             <el-tag
-              class="ml-2"
-              type="success"
-              v-if="scope.row.status == 1"
+              type="primary"
+              class="mx-1"
               effect="dark"
-              >Available</el-tag
+              v-if="scope.row.type == 2"
+              round
             >
-            <el-tag
-              class="ml-2"
-              type="danger"
-              v-if="scope.row.status == 2"
-              effect="dark"
-              >Damage or Lost</el-tag
-            >
-          </template>
-        </el-table-column>
-        <el-table-column label="Create Time" align="center">
-          <template #default="scope">
-            {{ dateFormat(scope.row.CreatedAt) }}
+              Student
+            </el-tag>
           </template>
         </el-table-column>
 
-        <el-table-column
+        <el-table-column label="Department" align="center" width="300">
+          <template #default="scope">
+            {{
+              scope.row.user_data.department
+                ? filterDepartment(scope.row.user_data.department)
+                : "--"
+            }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="Year" align="center" width="180">
+          <template #default="scope">
+            {{
+              scope.row.user_data.year
+                ? filterYear(scope.row.user_data.year)
+                : "--"
+            }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="Role no" align="center" width="150">
+          <template #default="scope">
+            {{ scope.row.user_data.year ? scope.row.user_data.role_no : "--" }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="Borrow Time" align="center" width="170">
+          <template #default="scope">
+            {{ dateFormat(scope.row.created_at) }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="Expire Time" align="center" width="170">
+          <template #default="scope">
+            {{ dateFormat(scope.row.expired_at) }}
+            <!-- {{ originalDate(scope.row.expired_at) }} -->
+          </template>
+        </el-table-column>
+
+        <!-- <el-table-column
           label="Operate"
           align="center"
           width="120"
@@ -176,7 +178,7 @@
               </el-button>
             </el-tooltip>
           </template>
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
 
       <div class="table-pager">
@@ -204,23 +206,21 @@
     :title="dialog.dialogTitle"
     :data="dialog.dialogData"
     :roleList="roleList"
-    :categoryLists="cetegoryLists"
-    :statusOptions="statusOptions"
   />
 </template>
-
+k
 <script>
 import { onMounted, reactive, toRefs, computed } from "vue";
 import Dialog from "./dialog.vue";
 import http from "@/http";
 import { useStore } from "vuex";
 import useTableData from "@/hooks/useTableData.js";
-import { dateFormat } from "@/utils/timeFormat.js";
+import { dateFormat, originalDate } from "@/utils/timeFormat.js";
 import { ElMessageBox, ElMessage } from "element-plus";
 import { useI18n } from "vue-i18n";
 
 export default {
-  name: "Book",
+  name: "Category",
   components: {
     Dialog,
   },
@@ -236,75 +236,28 @@ export default {
         page: 1,
         page_size: 10,
       },
-      cate_param: {
-        page: 1,
-        page_size: 500,
-      },
       dialog: {
         dialogTitle: "",
         dialogData: {},
       },
       isShowSearch: false,
       tableLists: [],
-      cetegoryLists: [],
       roleList: [],
       total: 0,
-      statusOptions: [
-        {
-          id: 1,
-          title: "Available",
-        },
-        {
-          id: 2,
-          title: "Lost or Damage",
-        },
-      ],
     });
 
     const store = useStore();
 
-    const filterStatus = (val) => {
-      switch (val) {
-        case 1:
-          return "Available";
-        case 2:
-          return "Lost or Damage";
-        default:
-          return "--";
-      }
-    };
-
     const getTableLists = () => {
       state.isLoading = true;
-      http.bookManagement.getBookList(state.param).then((res) => {
+      http.borrowHistory.getBorrowHistory(state.param).then((res) => {
         if (res.data.err_code == 0) {
           console.log(res.data.data.list);
           state.tableLists = res.data.data.list;
           state.total = res.data.data.total;
-          state.roleList = res.data.data.roles;
           state.isLoading = false;
         }
       });
-    };
-
-    const getCategoryLists = () => {
-      state.isLoading = true;
-      http.bookManagement.getCategoryList(state.cate_param).then((res) => {
-        if (res.data.err_code == 0) {
-          console.log(res.data.data.list);
-          state.cetegoryLists = res.data.data.list;
-        }
-      });
-    };
-
-    const filterCategory = (val) => {
-      if (state.cetegoryLists) {
-        let myCategory = state.cetegoryLists.filter((item) => {
-          return item.id == val;
-        });
-
-        return myCategory[0]?.title;
-      }
     };
 
     const addNew = () => {
@@ -331,11 +284,8 @@ export default {
       if (state.filterForm.id) {
         state.param.id = parseInt(state.filterForm.id);
       }
-      if (state.filterForm.name) {
-        state.param.name = state.filterForm.name;
-      }
-      if (state.filterForm.email) {
-        state.param.email = state.filterForm.email;
+      if (state.filterForm.title) {
+        state.param.title = state.filterForm.title;
       }
     };
 
@@ -356,7 +306,7 @@ export default {
         draggable: true,
       })
         .then(() => {
-          http.auth.deleteBookList({ id: id }).then((res) => {
+          http.bookManagement.deleteCategoryList({ id: id }).then((res) => {
             if (res.data.err_code == 0) {
               ElMessage.success(res.data.err_msg);
               search();
@@ -387,9 +337,46 @@ export default {
       }
     };
 
+    const filterDepartment = (val) => {
+      switch (val) {
+        case 1:
+          return "Faculty of Computer Systems & Technologies";
+        case 2:
+          return "Faculty of Computer Science";
+        case 3:
+          return "Faculty of Information Science";
+        case 4:
+          return "Department of Information Technology Supporting and Maintenance";
+        case 5:
+          return "Department of Physics";
+        case 6:
+          return "Department of Admistration and Finance";
+
+        default:
+          return "--";
+      }
+    };
+
+    const filterYear = (val) => {
+      switch (val) {
+        case 1:
+          return "First Year";
+        case 2:
+          return "Second Year";
+        case 3:
+          return "Third Year";
+        case 4:
+          return "Fourth Year";
+        case 5:
+          return "Final Year";
+
+        default:
+          return "--";
+      }
+    };
+
     onMounted(() => {
       getTableLists();
-      getCategoryLists();
     });
 
     return {
@@ -406,8 +393,9 @@ export default {
       device: computed(() => store.state.app.device),
       searchShow,
       t,
-      filterCategory,
-      filterStatus,
+      filterDepartment,
+      filterYear,
+      originalDate,
     };
   },
 };

@@ -241,7 +241,7 @@ export default {
           if (res.data.err_code == 0) {
             fileList.onSuccess();
             console.log("Here is success");
-            state.form.image = res.data.data.url;
+            state.form.book_image = res.data.data.url;
             ElMessage.success(res.data.err_msg);
           }
         });
