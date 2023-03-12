@@ -58,21 +58,27 @@
       >
         <el-table-column prop="id" label="ID" align="center" />
 
-        <el-table-column label="User ID" align="center" width="100">
+        <el-table-column label="Borrow Status" align="center" width="150">
           <template #default="scope">
-            {{ scope.row.user_data.uuid }}
-          </template>
-        </el-table-column>
+            <el-tag
+              type="warning"
+              class="mx-1"
+              effect="dark"
+              v-if="scope.row.status == 1"
+              round
+            >
+              Borrowing
+            </el-tag>
 
-        <el-table-column label="Username" align="center" width="200">
-          <template #default="scope">
-            {{ scope.row.user_data.name }}
-          </template>
-        </el-table-column>
-
-        <el-table-column label="Email" align="center" width="250">
-          <template #default="scope">
-            {{ scope.row.user_data.email }}
+            <el-tag
+              type="success"
+              class="mx-1"
+              effect="dark"
+              v-if="scope.row.status == 2"
+              round
+            >
+              Returned
+            </el-tag>
           </template>
         </el-table-column>
 
@@ -97,6 +103,23 @@
             >
               Student
             </el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="User ID" align="center" width="100">
+          <template #default="scope">
+            {{ scope.row.user_data.uuid }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="Username" align="center" width="200">
+          <template #default="scope">
+            {{ scope.row.user_data.name }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="Email" align="center" width="250">
+          <template #default="scope">
+            {{ scope.row.user_data.email }}
           </template>
         </el-table-column>
 
@@ -139,14 +162,23 @@
           </template>
         </el-table-column>
 
-        <!-- <el-table-column
+        <el-table-column
           label="Operate"
           align="center"
           width="120"
           fixed="right"
         >
           <template #default="scope">
-            <el-tooltip
+            <el-button
+              type="warning"
+              size="small"
+              style="margin-bottom: 5px"
+              @click="changeStatus(scope.row)"
+              v-if="scope.row.status == 1"
+            >
+              Change Status
+            </el-button>
+            <!-- <el-tooltip
               class="box-item"
               content="Edit"
               placement="top"
@@ -176,9 +208,9 @@
               >
                 <font-awesome-icon icon="fa-solid fa-trash" />
               </el-button>
-            </el-tooltip>
+            </el-tooltip> -->
           </template>
-        </el-table-column> -->
+        </el-table-column>
       </el-table>
 
       <div class="table-pager">
@@ -375,6 +407,41 @@ export default {
       }
     };
 
+    const changeStatus = (row) => {
+      ElMessageBox.confirm(
+        "Are you sure this user is return book?",
+        "Warning",
+        {
+          confirmButtonText: "Sure",
+          cancelButtonText: "Cancel",
+          type: "warning",
+          draggable: true,
+        }
+      )
+        .then(() => {
+          let param = {
+            id: row.id,
+            type: row.type,
+            status: 2,
+          };
+          http.borrowHistory.changeStatus(param).then((res) => {
+            if (res.data.err_code == 0) {
+              ElMessage.success(res.data.err_msg);
+              search();
+            } else {
+              ElMessage.error(res.data.err_msg);
+            }
+          });
+        })
+        .catch(() => {
+          search();
+          ElMessage({
+            type: "info",
+            message: "Canceled",
+          });
+        });
+    };
+
     onMounted(() => {
       getTableLists();
     });
@@ -396,6 +463,7 @@ export default {
       filterDepartment,
       filterYear,
       originalDate,
+      changeStatus,
     };
   },
 };

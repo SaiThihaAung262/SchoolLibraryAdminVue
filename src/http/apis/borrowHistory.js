@@ -13,3 +13,10 @@ export const addBorrow = (data) =>
     method: "POST",
     data,
   });
+
+export const changeStatus = (data) =>
+  http({
+    url: "/borrow/update-status",
+    method: "POST",
+    data,
+  });
