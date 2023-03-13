@@ -3,6 +3,7 @@ import { article } from "./aritcle";
 import { bookManagement } from "./bookManagement";
 import { userManagement } from "./userManagement";
 import { borrowHistory } from "./borrowHistory";
+import { report } from "./report";
 
 export const routes = [
   {
@@ -42,4 +43,5 @@ export const routes = [
   ...bookManagement,
   ...userManagement,
   ...borrowHistory,
+  ...report,
 ];

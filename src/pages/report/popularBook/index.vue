@@ -24,7 +24,7 @@
     </div>
 
     <div class="table">
-      <div class="top-panel">
+      <!-- <div class="top-panel">
         <div class="left">
           <el-button
             @click="addNew"
@@ -46,7 +46,7 @@
             <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
           </el-button>
         </div>
-      </div>
+      </div> -->
 
       <el-table
         :data="tableLists"
@@ -56,170 +56,17 @@
         height="65vh"
         style="width: 100%"
       >
-        <el-table-column prop="id" label="ID" align="center" />
+        <el-table-column prop="book_uuid" label="Book ID" align="center" />
 
-        <el-table-column label="Borrow Status" align="center" width="150">
+        <el-table-column label="Book Title" align="center">
           <template #default="scope">
-            <el-tag
-              type="warning"
-              class="mx-1"
-              effect="dark"
-              v-if="scope.row.status == 1"
-              round
-            >
-              Borrowing
-            </el-tag>
-
-            <el-tag
-              type="success"
-              class="mx-1"
-              effect="dark"
-              v-if="scope.row.status == 2"
-              round
-            >
-              Returned
-            </el-tag>
+            {{ scope.row.book_title }}
           </template>
         </el-table-column>
 
-        <el-table-column label="Borrower Type" align="center" width="150">
+        <el-table-column label="Borrow Count" align="center">
           <template #default="scope">
-            <el-tag
-              type=""
-              class="mx-1"
-              effect="dark"
-              v-if="scope.row.type == 1"
-              round
-            >
-              Teacher
-            </el-tag>
-
-            <el-tag
-              type=""
-              class="mx-1"
-              effect="dark"
-              v-if="scope.row.type == 2"
-              round
-            >
-              Student
-            </el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column label="User ID" align="center" width="100">
-          <template #default="scope">
-            {{ scope.row.user_data.uuid }}
-          </template>
-        </el-table-column>
-
-        <el-table-column label="Username" align="center" width="200">
-          <template #default="scope">
-            {{ scope.row.user_data.name }}
-          </template>
-        </el-table-column>
-
-        <el-table-column label="Email" align="center" width="250">
-          <template #default="scope">
-            {{ scope.row.user_data.email }}
-          </template>
-        </el-table-column>
-
-        <el-table-column label="Book ID" align="center" width="130">
-          <template #default="scope">
-            {{ scope.row.book_data.uuid }}
-          </template>
-        </el-table-column>
-
-        <el-table-column label="Book Title" align="center" width="250">
-          <template #default="scope">
-            {{ scope.row.book_data.title }}
-          </template>
-        </el-table-column>
-
-        <el-table-column label="Department" align="center" width="300">
-          <template #default="scope">
-            {{
-              scope.row.user_data.department
-                ? filterDepartment(scope.row.user_data.department)
-                : "--"
-            }}
-          </template>
-        </el-table-column>
-
-        <el-table-column label="Year" align="center" width="180">
-          <template #default="scope">
-            {{
-              scope.row.user_data.year
-                ? filterYear(scope.row.user_data.year)
-                : "--"
-            }}
-          </template>
-        </el-table-column>
-
-        <el-table-column label="Role no" align="center" width="150">
-          <template #default="scope">
-            {{ scope.row.user_data.year ? scope.row.user_data.role_no : "--" }}
-          </template>
-        </el-table-column>
-
-        <el-table-column label="Borrow Time" align="center" width="170">
-          <template #default="scope">
-            {{ dateFormat(scope.row.created_at) }}
-          </template>
-        </el-table-column>
-
-        <!-- <el-table-column label="Expire Time" align="center" width="170">
-          <template #default="scope">
-            {{ originalDate(scope.row.expired_at) }}
-          </template>
-        </el-table-column> -->
-
-        <el-table-column
-          label="Operate"
-          align="center"
-          width="120"
-          fixed="right"
-        >
-          <template #default="scope">
-            <el-button
-              type="warning"
-              size="small"
-              style="margin-bottom: 5px"
-              @click="changeStatus(scope.row)"
-              v-if="scope.row.status == 1"
-            >
-              Return
-            </el-button>
-            <!-- <el-tooltip
-              class="box-item"
-              content="Edit"
-              placement="top"
-              effect="customized"
-            >
-              <el-button
-                type="primary"
-                style="margin-left: 10px; margin-bottom: 5px"
-                circle
-                @click="handleEdit(scope.row)"
-              >
-                <font-awesome-icon icon="fa-solid fa-file-pen" />
-              </el-button>
-            </el-tooltip>
-
-            <el-tooltip
-              class="box-item"
-              content="Delete"
-              placement="top"
-              effect="customized"
-            >
-              <el-button
-                type="danger"
-                circle
-                style="margin-bottom: 5px"
-                @click="deleteHandler(scope.row.id)"
-              >
-                <font-awesome-icon icon="fa-solid fa-trash" />
-              </el-button>
-            </el-tooltip> -->
+            {{ scope.row.borrow_count }}
           </template>
         </el-table-column>
       </el-table>
@@ -241,20 +88,10 @@
       </div>
     </div>
   </div>
-
-  <Dialog
-    :show="showDialog"
-    @closed="closeDialog"
-    @created="search"
-    :title="dialog.dialogTitle"
-    :data="dialog.dialogData"
-    :roleList="roleList"
-  />
 </template>
 k
 <script>
 import { onMounted, reactive, toRefs, computed } from "vue";
-import Dialog from "./dialog.vue";
 import http from "@/http";
 import { useStore } from "vuex";
 import useTableData from "@/hooks/useTableData.js";
@@ -264,9 +101,7 @@ import { useI18n } from "vue-i18n";
 
 export default {
   name: "Category",
-  components: {
-    Dialog,
-  },
+  components: {},
   setup() {
     const { t } = useI18n();
 
@@ -293,7 +128,7 @@ export default {
 
     const getTableLists = () => {
       state.isLoading = true;
-      http.borrowHistory.getBorrowHistory(state.param).then((res) => {
+      http.report.getPopularBookLists(state.param).then((res) => {
         if (res.data.err_code == 0) {
           console.log(res.data.data.list);
           state.tableLists = res.data.data.list;

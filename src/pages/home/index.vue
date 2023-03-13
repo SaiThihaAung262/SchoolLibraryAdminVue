@@ -181,7 +181,7 @@ export default {
     const { t } = useI18n();
 
     const getDashboardData = () => {
-      // state.isLoading = true;
+      state.isLoading = true;
       http.user.getDashboard().then((res) => {
         if (res.data.err_code == 0) {
           state.data = res.data.data;
