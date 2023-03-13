@@ -112,10 +112,6 @@
               style="width: 35px; height: 35px"
               :src="scope.row.book_image"
             />
-            <!-- <img
-              src="/Users/thihaaung/Documents/SchoolLibraryProject/images/20230310132423.jpg"
-              alt=""
-            /> -->
           </template>
         </el-table-column>
 
@@ -260,11 +256,13 @@ export default {
         dialogTitle: "",
         dialogData: {},
       },
+      imagesSource: "/images/logo.png",
       isShowSearch: false,
       tableLists: [],
       cetegoryLists: [],
       roleList: [],
       total: 0,
+
       statusOptions: [
         {
           id: 1,

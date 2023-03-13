@@ -1,10 +1,9 @@
 import { checkPermissions } from "@/utils/permissions";
-
 export const report = [
   {
     id: 500,
     name: "Report",
-    icon: "fa-solid fa-book",
+    icon: "fa-solid fa-file-invoice",
     url: "/report",
     type: "group",
     permission: true,
@@ -13,7 +12,7 @@ export const report = [
       {
         id: 101,
         name: "Popular Books",
-        icon: "fa-solid fa-book",
+        icon: "fa-regular fa-circle",
         type: "page",
         permission: true,
         perName: "popularBooks",
