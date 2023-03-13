@@ -3,12 +3,29 @@
     <div class="form" v-show="isShowSearch">
       <div class="form-content">
         <el-form label-position="top" label-width="300px">
-          <el-form-item label="Id">
-            <el-input placeholder="id" v-model="filterForm.id" />
+          <el-form-item label="User ID">
+            <el-input placeholder="User ID" v-model="filterForm.user_uuid" />
           </el-form-item>
 
-          <el-form-item label="Title">
-            <el-input placeholder="Title" v-model="filterForm.title" />
+          <el-form-item label="Book ID">
+            <el-input placeholder="Book ID" v-model="filterForm.book_uuid" />
+          </el-form-item>
+
+          <el-form-item label="Borrow Status">
+            <el-select
+              :multiple="false"
+              placeholder="Please select borrow status"
+              style="width: 100%"
+              v-model="filterForm.status"
+              default-first-option
+            >
+              <el-option
+                v-for="item in borrowStatusOptions"
+                :key="item"
+                :value="item.id"
+                :label="item.title"
+              />
+            </el-select>
           </el-form-item>
 
           <div style="margin-top: 34px" class="buttonBox">
@@ -287,6 +304,16 @@ export default {
       tableLists: [],
       roleList: [],
       total: 0,
+      borrowStatusOptions: [
+        {
+          id: 1,
+          title: "Borrowing",
+        },
+        {
+          id: 2,
+          title: "Returned",
+        },
+      ],
     });
 
     const store = useStore();
@@ -324,11 +351,15 @@ export default {
         page: 1,
       };
 
-      if (state.filterForm.id) {
-        state.param.id = parseInt(state.filterForm.id);
+      if (state.filterForm.status) {
+        state.param.status = parseInt(state.filterForm.status);
       }
-      if (state.filterForm.title) {
-        state.param.title = state.filterForm.title;
+
+      if (state.filterForm.user_uuid) {
+        state.param.user_uuid = state.filterForm.user_uuid;
+      }
+      if (state.filterForm.book_uuid) {
+        state.param.book_uuid = state.filterForm.book_uuid;
       }
     };
 
