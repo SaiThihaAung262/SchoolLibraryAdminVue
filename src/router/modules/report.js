@@ -10,4 +10,15 @@ export const report = [
       tagsView: true,
     },
   },
+  {
+    name: "booksSummary",
+    path: "/report/booksSummary",
+    component: () => import("@/pages/report/bookSummary/index.vue"),
+    meta: {
+      title: "Books Summary",
+      auth: true,
+      layout: "admin",
+      tagsView: true,
+    },
+  },
 ];
