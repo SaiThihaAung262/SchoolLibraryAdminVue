@@ -111,15 +111,15 @@
 
         <el-table-column
           prop="available_qty"
-          label="Available"
+          label="Total Book"
           align="center"
           width="100"
         />
         <el-table-column
           prop="borrow_qty"
-          label="Borrow Qty"
+          label="Borrowing Qty"
           align="center"
-          width="120"
+          width="130"
         />
 
         <el-table-column label="Image" align="center" width="130">
