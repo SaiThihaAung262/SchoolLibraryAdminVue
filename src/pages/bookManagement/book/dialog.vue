@@ -286,6 +286,10 @@ export default {
             url: props.data.book_image,
           });
         }
+        if (state.fileList.length > 1) {
+          state.fileList.shift();
+        }
+        // console.log(state.fileList);
       } else {
         state.form = {
           title: "",

@@ -90,10 +90,20 @@
         height="65vh"
         style="width: 100%"
       >
-        <el-table-column prop="uuid" label="ID" align="center" />
-        <el-table-column prop="title" label="Title" align="center" />
-        <el-table-column prop="author" label="Author" align="center" />
-        <el-table-column label="Category" align="center">
+        <el-table-column prop="uuid" label="ID" align="center" width="110" />
+        <el-table-column
+          prop="title"
+          label="Title"
+          align="center"
+          width="250"
+        />
+        <el-table-column
+          prop="author"
+          label="Author"
+          align="center"
+          width="250"
+        />
+        <el-table-column label="Category" align="center" width="250">
           <template #default="scope">
             {{ filterCategory(scope.row.category_id) }}
           </template>
@@ -103,10 +113,16 @@
           prop="available_qty"
           label="Available"
           align="center"
+          width="100"
         />
-        <el-table-column prop="borrow_qty" label="Borrow Qty" align="center" />
+        <el-table-column
+          prop="borrow_qty"
+          label="Borrow Qty"
+          align="center"
+          width="120"
+        />
 
-        <el-table-column label="Image" align="center">
+        <el-table-column label="Image" align="center" width="130">
           <template #default="scope">
             <el-image
               style="width: 35px; height: 35px"
@@ -115,7 +131,12 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="status" label="Status" align="center">
+        <el-table-column
+          prop="status"
+          label="Status"
+          align="center"
+          width="150"
+        >
           <template #default="scope">
             <!-- {{ filterStatus(scope.row.status) }} -->
 
@@ -143,7 +164,7 @@
             >
           </template>
         </el-table-column>
-        <el-table-column label="Create Time" align="center">
+        <el-table-column label="Create Time" align="center" width="180">
           <template #default="scope">
             {{ dateFormat(scope.row.CreatedAt) }}
           </template>
@@ -342,8 +363,8 @@ export default {
         page: 1,
       };
 
-      if (state.filterForm.id) {
-        state.param.id = parseInt(state.filterForm.id);
+      if (state.filterForm.uuid) {
+        state.param.uuid = state.filterForm.uuid;
       }
       if (state.filterForm.name) {
         state.param.name = state.filterForm.name;

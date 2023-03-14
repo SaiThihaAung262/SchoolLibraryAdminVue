@@ -84,7 +84,7 @@
               </el-button>
             </el-tooltip>
 
-            <el-tooltip
+            <!-- <el-tooltip
               class="box-item"
               content="Delete"
               placement="top"
@@ -98,7 +98,7 @@
               >
                 <font-awesome-icon icon="fa-solid fa-trash" />
               </el-button>
-            </el-tooltip>
+            </el-tooltip> -->
           </template>
         </el-table-column>
       </el-table>
