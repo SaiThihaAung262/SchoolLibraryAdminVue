@@ -169,6 +169,7 @@ export default {
       if (props.data.hasOwnProperty("id")) {
         state.form = {
           id: props.data.id,
+          uuid: props.data.uuid,
           name: props.data.name,
           email: props.data.email,
           password: props.data.password,

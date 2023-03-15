@@ -366,11 +366,14 @@ export default {
       if (state.filterForm.uuid) {
         state.param.uuid = state.filterForm.uuid;
       }
-      if (state.filterForm.name) {
-        state.param.name = state.filterForm.name;
+      if (state.filterForm.title) {
+        state.param.title = state.filterForm.title;
       }
-      if (state.filterForm.email) {
-        state.param.email = state.filterForm.email;
+      if (state.filterForm.category_id) {
+        state.param.category_id = parseInt(state.filterForm.category_id);
+      }
+      if (state.filterForm.status) {
+        state.param.status = parseInt(state.filterForm.status);
       }
     };
 
