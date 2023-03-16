@@ -3,6 +3,7 @@ import { bookManagement } from "./modules/bookMangement";
 import { userManagement } from "./modules/userManagement";
 import { borrowHistory } from "./modules/borrowHistory";
 import { report } from "./modules/report";
+import { config } from "./modules/config";
 
 export const sidebarItem = [
   {
@@ -22,6 +23,7 @@ export const sidebarItem = [
     ],
   },
   ...auth,
+  ...config,
   ...userManagement,
   ...bookManagement,
   ...borrowHistory,

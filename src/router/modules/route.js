@@ -4,6 +4,7 @@ import { bookManagement } from "./bookManagement";
 import { userManagement } from "./userManagement";
 import { borrowHistory } from "./borrowHistory";
 import { report } from "./report";
+import { config } from "./config";
 
 export const routes = [
   {
@@ -40,6 +41,7 @@ export const routes = [
   },
   ...auth,
   ...article,
+  ...config,
   ...bookManagement,
   ...userManagement,
   ...borrowHistory,
