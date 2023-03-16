@@ -62,9 +62,9 @@ http.interceptors.response.use(
   },
   (error) => {
     if (error.response.data.err_msg == "Group URL Duplicate ") {
-      ElMessage.error("域名已存在!");
+      // ElMessage.error("域名已存在!");
     } else if (error.response.data.err_msg == "Group Name Duplicate ") {
-      ElMessage.error("分组名称已存在!");
+      // ElMessage.error("分组名称已存在!");
     } else {
       ElMessage.error(error.response.data.err_msg);
     }
