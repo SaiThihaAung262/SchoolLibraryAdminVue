@@ -10,15 +10,15 @@ export const config = [
       tagsView: true,
     },
   },
-  //   {
-  //     name: "books",
-  //     path: "/book/books",
-  //     component: () => import("@/pages/bookManagement/book/index.vue"),
-  //     meta: {
-  //       title: "Books",
-  //       auth: true,
-  //       layout: "admin",
-  //       tagsView: true,
-  //     },
-  //   },
+  {
+    name: "managementPunishment",
+    path: "/cofig/managementPunishment",
+    component: () => import("@/pages/config/managePunishment/index.vue"),
+    meta: {
+      title: "Books",
+      auth: true,
+      layout: "admin",
+      tagsView: true,
+    },
+  },
 ];

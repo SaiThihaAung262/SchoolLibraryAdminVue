@@ -7,27 +7,20 @@
   >
     <el-form label-width="120px" ref="formRef" :model="form">
       <el-form-item
-        label="Title : "
-        prop="title"
+        label="Package Name : "
+        prop="package_name"
         :rules="[{ required: true, message: 'Required!', trigger: 'blur' }]"
       >
-        <el-input v-model="form.title" placeholder="" />
+        <el-input v-model="form.package_name" placeholder="" />
       </el-form-item>
 
       <el-form-item
-        label="Description : "
-        prop="desc"
+        label="Duration : "
+        prop="duration"
         :rules="[{ required: true, message: 'Required!', trigger: 'blur' }]"
       >
-        <el-input v-model="form.desc" placeholder="" />
+        <el-input v-model="form.duration" placeholder="" />
       </el-form-item>
-
-      <!-- <el-form-item :label="t('table.state')">
-        <el-radio-group v-model.number="form.status">
-          <el-radio :label="1">{{ t("common.normal") }}</el-radio>
-          <el-radio :label="2">{{ t("common.hide") }}</el-radio>
-        </el-radio-group>
-      </el-form-item> -->
     </el-form>
     <template #footer>
       <span class="dialog-footer">
@@ -58,8 +51,8 @@ export default {
       uploadPercent: 0,
 
       form: {
-        title: "",
-        desc: "",
+        package_name: "",
+        duration: 0,
       },
       roleList: [],
       percentage: 0,
@@ -80,14 +73,12 @@ export default {
     const submitDialog = (formRef) => {
       formRef.validate((valid) => {
         if (valid) {
+          state.form.duration = parseInt(state.form.duration);
           if (state.dialogTitle == "Add") {
-            http.bookManagement.addCategoryList(state.form).then((res) => {
+            http.config.addPunishment(state.form).then((res) => {
               if (res.data.err_code == 0) {
                 closeDialog(formRef);
-                state.form = {
-                  title: "",
-                  desc: "",
-                };
+                state.form = {};
                 ElMessage.success(res.data.err_msg);
 
                 formRef.resetFields();
@@ -97,13 +88,10 @@ export default {
               }
             });
           } else {
-            http.bookManagement.editCategoryList(state.form).then((res) => {
+            http.config.updatePunishment(state.form).then((res) => {
               if (res.data.err_code == 0) {
                 closeDialog(formRef);
-                state.form = {
-                  title: "",
-                  desc: "",
-                };
+                state.form = {};
                 ElMessage.success(res.data.err_msg);
 
                 formRef.resetFields();
@@ -123,13 +111,13 @@ export default {
       if (props.data.hasOwnProperty("id")) {
         state.form = {
           id: props.data.id,
-          title: props.data.title,
-          desc: props.data.desc,
+          package_name: props.data.package_name,
+          duration: props.data.duration,
         };
       } else {
         state.form = {
-          title: "",
-          desc: "",
+          package_name: "",
+          duration: 0,
         };
       }
     });

@@ -24,7 +24,7 @@
     </div>
 
     <div class="table">
-      <div class="top-panel">
+      <!-- <div class="top-panel">
         <div class="left">
           <el-button
             @click="addNew"
@@ -46,7 +46,7 @@
             <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
           </el-button>
         </div>
-      </div>
+      </div> -->
 
       <el-table
         :data="tableLists"
@@ -57,9 +57,17 @@
         style="width: 100%"
       >
         <el-table-column prop="id" label="ID" align="center" />
-        <el-table-column prop="title" label="Title" align="center" />
+        <el-table-column
+          prop="package_name"
+          label="Package name"
+          align="center"
+        />
 
-        <el-table-column prop="desc" label="Description" align="center" />
+        <el-table-column
+          prop="duration"
+          label="Duration (Day)"
+          align="center"
+        />
 
         <el-table-column
           label="Operate"
@@ -103,7 +111,7 @@
         </el-table-column>
       </el-table>
 
-      <div class="table-pager">
+      <!-- <div class="table-pager">
         <el-pagination
           @size-change="onSizeChange"
           @current-change="onCurrentChange"
@@ -117,7 +125,7 @@
           :small="device === 'mobile' ? true : false"
         >
         </el-pagination>
-      </div>
+      </div> -->
     </div>
   </div>
 
@@ -172,11 +180,10 @@ export default {
 
     const getTableLists = () => {
       state.isLoading = true;
-      http.bookManagement.getCategoryList(state.param).then((res) => {
+      http.config.getPunishment().then((res) => {
         if (res.data.err_code == 0) {
-          console.log(res.data.data.list);
-          state.tableLists = res.data.data.list;
-          state.total = res.data.data.total;
+          state.tableLists = res.data.data;
+          // state.total = res.data.data.total;
           state.isLoading = false;
         }
       });
