@@ -5,7 +5,7 @@
     draggable
     :title="dialogTitle"
   >
-    <el-form label-width="200px" ref="formRef" :model="form">
+    <el-form label-width="250px" ref="formRef" :model="form">
       <el-form-item
         label="Package Name : "
         prop="package_name"
@@ -23,11 +23,19 @@
       </el-form-item>
 
       <el-form-item
-        label="Punishment Amount : "
-        prop="punishment_amt"
+        label="Teacher Punishment Amount : "
+        prop="teacher_punishment_amt"
         :rules="[{ required: true, message: 'Required!', trigger: 'blur' }]"
       >
-        <el-input v-model="form.punishment_amt" placeholder="" />
+        <el-input v-model="form.teacher_punishment_amt" placeholder="" />
+      </el-form-item>
+
+      <el-form-item
+        label="Student Punishment Amount : "
+        prop="student_punishment_amt"
+        :rules="[{ required: true, message: 'Required!', trigger: 'blur' }]"
+      >
+        <el-input v-model="form.student_punishment_amt" placeholder="" />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -62,6 +70,8 @@ export default {
         package_name: "",
         duration: 0,
         punishment_amt: 0,
+        teacher_punishment_amt: 0,
+        student_punishment_amt: 0,
       },
       roleList: [],
       percentage: 0,
@@ -83,7 +93,12 @@ export default {
       formRef.validate((valid) => {
         if (valid) {
           state.form.duration = parseInt(state.form.duration);
-          state.form.punishment_amt = parseInt(state.form.punishment_amt);
+          state.form.teacher_punishment_amt = parseInt(
+            state.form.teacher_punishment_amt
+          );
+          state.form.student_punishment_amt = parseInt(
+            state.form.student_punishment_amt
+          );
 
           if (state.dialogTitle == "Add") {
             http.config.addPunishment(state.form).then((res) => {
@@ -124,13 +139,16 @@ export default {
           id: props.data.id,
           package_name: props.data.package_name,
           duration: props.data.duration,
-          punishment_amt: props.data.punishment_amt,
+          teacher_punishment_amt: props.data.teacher_punishment_amt,
+          student_punishment_amt: props.data.student_punishment_amt,
         };
       } else {
         state.form = {
           package_name: "",
           duration: 0,
           punishment_amt: 0,
+          teacher_punishment_amt: 0,
+          student_punishment_amt: 0,
         };
       }
     });

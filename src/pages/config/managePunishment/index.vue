@@ -70,9 +70,17 @@
         />
 
         <el-table-column
-          prop="punishment_amt"
-          label="Punishment Amount (MMK)"
+          prop="teacher_punishment_amt"
+          label="Punishment Amount (Teacher)"
           align="center"
+          width="300"
+        />
+
+        <el-table-column
+          prop="student_punishment_amt"
+          label="Punishment Amount (Student)"
+          align="center"
+          width="300"
         />
 
         <el-table-column

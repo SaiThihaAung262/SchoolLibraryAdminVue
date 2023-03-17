@@ -40,6 +40,41 @@
         />
       </el-form-item>
 
+      <el-form-item
+        label="Teacher can borrow day : "
+        prop="teacher_can_borrow_day"
+        :rules="[
+          {
+            required: true,
+            message: 'Cannot be empty or minus',
+            trigger: 'blur',
+            pattern: /^(0*[0-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[0-9][0-9]*)$/,
+          },
+        ]"
+      >
+        <el-input
+          placeholder=""
+          v-model="systemConfigParam.teacher_can_borrow_day"
+        />
+      </el-form-item>
+      <el-form-item
+        label="Student can borrow day : "
+        prop="student_can_borrow_day"
+        :rules="[
+          {
+            required: true,
+            message: 'Cannot be empty or minus',
+            trigger: 'blur',
+            pattern: /^(0*[0-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[0-9][0-9]*)$/,
+          },
+        ]"
+      >
+        <el-input
+          placeholder=""
+          v-model="systemConfigParam.student_can_borrow_day"
+        />
+      </el-form-item>
+
       <!-- <el-form-item
         label="Teacher Punishment Amount : "
         prop="teacher_punishment_amt"
@@ -119,6 +154,8 @@ export default {
         student_can_borrow_count: 0,
         teacher_punishment_amt: 0,
         student_punishment_amt: 0,
+        teacher_can_borrow_day: 0,
+        student_can_borrow_day: 0,
       },
     });
     const store = useStore();
@@ -135,6 +172,8 @@ export default {
               student_can_borrow_count: res.data.data.student_can_borrow_count,
               teacher_punishment_amt: res.data.data.teacher_punishment_amt,
               student_punishment_amt: res.data.data.student_punishment_amt,
+              teacher_can_borrow_day: res.data.data.teacher_can_borrow_day,
+              student_can_borrow_day: res.data.data.student_can_borrow_day,
             };
             state.isLoading = false;
           }
@@ -168,6 +207,12 @@ export default {
           );
           state.systemConfigParam.student_punishment_amt = parseInt(
             state.systemConfigParam.student_punishment_amt
+          );
+          state.systemConfigParam.student_can_borrow_day = parseInt(
+            state.systemConfigParam.student_can_borrow_day
+          );
+          state.systemConfigParam.teacher_can_borrow_day = parseInt(
+            state.systemConfigParam.teacher_can_borrow_day
           );
           http.config.updateConfigData(state.systemConfigParam).then((res) => {
             if (res.data.err_code == 0) {
