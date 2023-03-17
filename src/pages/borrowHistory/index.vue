@@ -96,6 +96,16 @@
             >
               Returned
             </el-tag>
+
+            <el-tag
+              type="danger"
+              class="mx-1"
+              effect="dark"
+              v-if="scope.row.status == 3"
+              round
+            >
+              Expired
+            </el-tag>
           </template>
         </el-table-column>
 
@@ -184,11 +194,27 @@
           </template>
         </el-table-column>
 
-        <!-- <el-table-column label="Expire Time" align="center" width="170">
+        <el-table-column label="Expire Time" align="center" width="170">
           <template #default="scope">
-            {{ originalDate(scope.row.expired_at) }}
+            {{
+              scope.row.status == 1 ? originalDate(scope.row.expired_at) : "--"
+            }}
           </template>
-        </el-table-column> -->
+        </el-table-column>
+
+        <el-table-column label="Expired day" align="center" width="150">
+          <template #default="scope">
+            {{ scope.row.status == 3 ? scope.row.expired_day : "--" }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="Punishment Amt" align="center" width="150">
+          <template #default="scope">
+            {{
+              scope.row.status == 3 ? `${scope.row.punishment_amt} MMK` : "--"
+            }}
+          </template>
+        </el-table-column>
 
         <el-table-column
           label="Operate"
@@ -202,7 +228,7 @@
               size="small"
               style="margin-bottom: 5px"
               @click="changeStatus(scope.row)"
-              v-if="scope.row.status == 1"
+              v-if="scope.row.status !== 2"
             >
               Return
             </el-button>
@@ -312,6 +338,10 @@ export default {
         {
           id: 2,
           title: "Returned",
+        },
+        {
+          id: 3,
+          title: "Expired",
         },
       ],
     });

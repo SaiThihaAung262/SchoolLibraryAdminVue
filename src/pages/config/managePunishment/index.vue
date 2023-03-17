@@ -63,8 +63,14 @@
           align="center"
         />
 
+        <!-- <el-table-column
+          prop="duration_start"
+          label="Start Duration (Day)"
+          align="center"
+        /> -->
+
         <el-table-column
-          prop="duration"
+          prop="duration_end"
           label="Duration (Day)"
           align="center"
         />

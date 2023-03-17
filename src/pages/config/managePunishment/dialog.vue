@@ -16,10 +16,10 @@
 
       <el-form-item
         label="Duration : "
-        prop="duration"
+        prop="duration_end"
         :rules="[{ required: true, message: 'Required!', trigger: 'blur' }]"
       >
-        <el-input v-model="form.duration" placeholder="" />
+        <el-input v-model="form.duration_end" placeholder="" />
       </el-form-item>
 
       <el-form-item
@@ -68,10 +68,10 @@ export default {
 
       form: {
         package_name: "",
-        duration: 0,
-        punishment_amt: 0,
         teacher_punishment_amt: 0,
         student_punishment_amt: 0,
+        duration_start: 0,
+        duration_end: 0,
       },
       roleList: [],
       percentage: 0,
@@ -92,7 +92,9 @@ export default {
     const submitDialog = (formRef) => {
       formRef.validate((valid) => {
         if (valid) {
-          state.form.duration = parseInt(state.form.duration);
+          state.form.duration_start = parseInt(state.form.duration_start);
+          state.form.duration_end = parseInt(state.form.duration_end);
+
           state.form.teacher_punishment_amt = parseInt(
             state.form.teacher_punishment_amt
           );
@@ -138,17 +140,18 @@ export default {
         state.form = {
           id: props.data.id,
           package_name: props.data.package_name,
-          duration: props.data.duration,
           teacher_punishment_amt: props.data.teacher_punishment_amt,
           student_punishment_amt: props.data.student_punishment_amt,
+          duration_start: props.data.duration_start,
+          duration_end: props.data.duration_end,
         };
       } else {
         state.form = {
           package_name: "",
-          duration: 0,
-          punishment_amt: 0,
           teacher_punishment_amt: 0,
           student_punishment_amt: 0,
+          duration_start: 0,
+          duration_end: 0,
         };
       }
     });
