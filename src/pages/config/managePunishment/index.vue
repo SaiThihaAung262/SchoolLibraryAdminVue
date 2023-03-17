@@ -70,6 +70,12 @@
         />
 
         <el-table-column
+          prop="punishment_amt"
+          label="Punishment Amount (MMK)"
+          align="center"
+        />
+
+        <el-table-column
           label="Operate"
           align="center"
           width="120"

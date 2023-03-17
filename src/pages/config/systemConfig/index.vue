@@ -1,7 +1,7 @@
 <template>
   <div v-loading="isLoading">
     <el-form
-      label-width="250px"
+      label-width="270px"
       label-position="left"
       :model="systemConfigParam"
     >
@@ -40,7 +40,7 @@
         />
       </el-form-item>
 
-      <el-form-item
+      <!-- <el-form-item
         label="Teacher Punishment Amount : "
         prop="teacher_punishment_amt"
         :rules="[
@@ -73,7 +73,7 @@
           placeholder=""
           v-model="systemConfigParam.student_punishment_amt"
         />
-      </el-form-item>
+      </el-form-item> -->
 
       <el-button
         @click="confirmSaveChange"
