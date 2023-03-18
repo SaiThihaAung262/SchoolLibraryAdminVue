@@ -20,3 +20,10 @@ export const changeStatus = (data) =>
     method: "POST",
     data,
   });
+
+export const reBorrow = (data) =>
+  http({
+    url: "/borrow/re-borrow",
+    method: "POST",
+    data,
+  });

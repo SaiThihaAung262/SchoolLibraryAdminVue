@@ -232,6 +232,15 @@
             >
               Return
             </el-button>
+            <el-button
+              type="warning"
+              size="small"
+              style="margin-bottom: 5px"
+              @click="reBorrowHandler(scope.row)"
+              v-if="scope.row.status !== 2"
+            >
+              Reborrow
+            </el-button>
             <!-- <el-tooltip
               class="box-item"
               content="Edit"
@@ -516,6 +525,58 @@ export default {
         });
     };
 
+    const reBorrowHandler = (row) => {
+      ElMessageBox.confirm(
+        "Are you sure this user is re-borrow the book?",
+        "Warning",
+        {
+          confirmButtonText: "Sure",
+          cancelButtonText: "Cancel",
+          type: "warning",
+          draggable: true,
+        }
+      )
+        .then(() => {
+          let updateParam = {
+            id: row.id,
+            type: row.type,
+            status: 2,
+            user_uuid: row.user_data.uuid,
+            book_uuid: row.book_data.uuid,
+          };
+          http.borrowHistory.changeStatus(updateParam).then((res) => {
+            if (res.data.err_code == 0) {
+              ElMessage.success(res.data.err_msg);
+              search();
+            } else {
+              ElMessage.error(res.data.err_msg);
+            }
+          });
+
+          let createParam = {
+            type: row.type,
+            user_uuid: row.user_data.uuid,
+            book_uuid: row.book_data.uuid,
+          };
+
+          http.borrowHistory.addBorrow(createParam).then((res) => {
+            if (res.data.err_code == 0) {
+              ElMessage.success(res.data.err_msg);
+              search();
+            } else {
+              ElMessage.error(res.data.err_msg);
+            }
+          });
+        })
+        .catch(() => {
+          search();
+          ElMessage({
+            type: "info",
+            message: "Canceled",
+          });
+        });
+    };
+
     onMounted(() => {
       getTableLists();
     });
@@ -538,6 +599,7 @@ export default {
       filterYear,
       originalDate,
       changeStatus,
+      reBorrowHandler,
     };
   },
 };
