@@ -559,14 +559,16 @@ export default {
             book_uuid: row.book_data.uuid,
           };
 
-          http.borrowHistory.addBorrow(createParam).then((res) => {
-            if (res.data.err_code == 0) {
-              ElMessage.success(res.data.err_msg);
-              search();
-            } else {
-              ElMessage.error(res.data.err_msg);
-            }
-          });
+          setTimeout(() => {
+            http.borrowHistory.addBorrow(createParam).then((res) => {
+              if (res.data.err_code == 0) {
+                ElMessage.success(res.data.err_msg);
+                search();
+              } else {
+                ElMessage.error(res.data.err_msg);
+              }
+            });
+          }, 500);
         })
         .catch(() => {
           search();
