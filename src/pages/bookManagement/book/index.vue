@@ -164,6 +164,19 @@
             >
           </template>
         </el-table-column>
+
+        <el-table-column label="Download Link" align="center" width="180">
+          <template #default="scope">
+            {{ scope.row.download_link ? scope.row.download_link : "--" }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="Publish Date" align="center" width="180">
+          <template #default="scope">
+            {{ scope.row.publish_date }}
+          </template>
+        </el-table-column>
+
         <el-table-column label="Create Time" align="center" width="180">
           <template #default="scope">
             {{ dateFormat(scope.row.CreatedAt) }}

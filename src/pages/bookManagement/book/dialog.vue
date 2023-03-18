@@ -88,6 +88,23 @@
         <el-input v-model="form.summary" placeholder="" type="textarea" />
       </el-form-item>
 
+      <el-form-item label="Download Link: ">
+        <el-input v-model="form.download_link" placeholder="" />
+      </el-form-item>
+
+      <!-- <el-form-item label="Publish date: ">
+        <el-input v-model="form.publish_date" placeholder="" />
+      </el-form-item> -->
+
+      <el-form-item label="Publish date:">
+        <el-date-picker
+          v-model="form.publish_date"
+          value-format="YYYY-MM-DD"
+          unlink-panels
+          placeholder="Select Date"
+        />
+      </el-form-item>
+
       <el-form-item label="Book Cover:">
         <el-upload
           list-type="picture-card"
@@ -137,6 +154,8 @@ export default {
         author: "",
         summary: "",
         book_image: "",
+        download_link: "",
+        publish_date: "",
       },
       percentage: 0,
       fileList: [],
@@ -280,6 +299,8 @@ export default {
         state.form.book_image = props.data.book_image;
         state.form.available_qty = props.data.available_qty;
         state.form.borrow_qty = props.data.borrow_qty;
+        state.form.download_link = props.data.download_link;
+        state.form.publish_date = props.data.publish_date;
 
         if (props.data.book_image) {
           state.fileList.push({
@@ -299,6 +320,8 @@ export default {
           summary: "",
           book_image: "",
           available_qty: "",
+          download_link: "",
+          publish_date: "",
         };
       }
     });
