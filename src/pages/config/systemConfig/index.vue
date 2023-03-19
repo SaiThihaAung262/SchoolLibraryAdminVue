@@ -40,7 +40,7 @@
         />
       </el-form-item>
 
-      <!-- <el-form-item
+      <el-form-item
         label="Teacher can borrow day : "
         prop="teacher_can_borrow_day"
         :rules="[
@@ -73,7 +73,7 @@
           placeholder=""
           v-model="systemConfigParam.student_can_borrow_day"
         />
-      </el-form-item> -->
+      </el-form-item>
 
       <!-- <el-form-item
         label="Teacher Punishment Amount : "

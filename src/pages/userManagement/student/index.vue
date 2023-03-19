@@ -81,25 +81,33 @@
         height="65vh"
         style="width: 100%"
       >
-        <el-table-column prop="uuid" label="ID" align="center" />
-        <el-table-column prop="name" label="Username" align="center" />
-
-        <el-table-column prop="role_no" label="Role no" align="center" />
-
-        <el-table-column label="Year" align="center">
-          <template #default="scope">
-            {{ filterYear(scope.row.year) }}
-          </template>
-        </el-table-column>
-
+        <el-table-column prop="uuid" label="ID" align="center" width="100px" />
+        <el-table-column
+          prop="name"
+          label="Username"
+          align="center"
+          width="300px"
+        />
         <el-table-column
           prop="email"
           label="Email"
           align="center"
           width="300px"
         />
+        <el-table-column
+          prop="role_no"
+          label="Role no"
+          align="center"
+          width="300px"
+        />
 
-        <el-table-column label="Register Time" align="center">
+        <el-table-column label="Year" align="center" width="200px">
+          <template #default="scope">
+            {{ filterYear(scope.row.year) }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="Register Time" align="center" width="250px">
           <template #default="scope">
             {{ dateFormat(scope.row.CreatedAt) }}
           </template>
