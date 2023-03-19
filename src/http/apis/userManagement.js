@@ -1,7 +1,7 @@
 import http from "../axios";
 
 /**
- * @Category
+ * @Teachers
  */
 
 export const getTeachers = (data) =>
@@ -28,6 +28,9 @@ export const deleteTeacher = (data) =>
     data,
   });
 
+/**
+ * @Students
+ */
 export const getStudents = (data) =>
   http({ url: "/student/get-students", method: "GET", params: data });
 
@@ -48,6 +51,34 @@ export const editStudent = (data) =>
 export const deleteStudent = (data) =>
   http({
     url: "/student/delete",
+    method: "POST",
+    data,
+  });
+
+/**
+ * @Student
+ */
+
+export const getStaffs = (data) =>
+  http({ url: "/staff/get-staffs", method: "GET", params: data });
+
+export const addStaff = (data) =>
+  http({
+    url: "/staff/create",
+    method: "POST",
+    data,
+  });
+
+export const editStaff = (data) =>
+  http({
+    url: "/staff/update",
+    method: "POST",
+    data,
+  });
+
+export const deleteStaff = (data) =>
+  http({
+    url: "/staff/delete",
     method: "POST",
     data,
   });

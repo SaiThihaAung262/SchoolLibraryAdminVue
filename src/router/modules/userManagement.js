@@ -21,4 +21,15 @@ export const userManagement = [
       tagsView: true,
     },
   },
+  {
+    name: "staff",
+    path: "/user/staff",
+    component: () => import("@/pages/userManagement/staff/index.vue"),
+    meta: {
+      title: "Staff",
+      auth: true,
+      layout: "admin",
+      tagsView: true,
+    },
+  },
 ];
