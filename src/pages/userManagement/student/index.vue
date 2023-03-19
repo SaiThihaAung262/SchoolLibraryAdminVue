@@ -64,6 +64,13 @@
         </div>
         <div class="right">
           <el-button
+            @click="handlerExport"
+            style="margin-bottom: 25px"
+            type="warning"
+          >
+            <font-awesome-icon icon="fa-solid fa-download" />
+          </el-button>
+          <el-button
             @click="searchShow"
             style="margin-bottom: 25px"
             type="info"
@@ -193,6 +200,7 @@ import useTableData from "@/hooks/useTableData.js";
 import { dateFormat } from "@/utils/timeFormat.js";
 import { ElMessageBox, ElMessage } from "element-plus";
 import { useI18n } from "vue-i18n";
+import ExportData2Excel from "./export.js";
 
 export default {
   name: "Admin",
@@ -366,6 +374,33 @@ export default {
       }
     };
 
+    const handlerExport = () => {
+      state.isLoading = true;
+      let data = [];
+
+      state.param.page_size = state.total;
+      http.userManagement.getStudents(state.param).then((res) => {
+        if (res.data.err_code === 0) {
+          data = res.data.data.list;
+          exporttttt(data);
+        }
+      });
+    };
+
+    const exporttttt = (data) => {
+      ExportData2Excel(data)
+        .then((res) => {
+          state.param.page_size = 10;
+          search();
+          state.isLoading = false;
+        })
+        .catch((err) => {
+          state.param.page_size = 10;
+          search();
+          state.isLoading = false;
+        });
+    };
+
     onMounted(() => {
       getTableLists();
     });
@@ -386,6 +421,7 @@ export default {
       searchShow,
       t,
       filterYear,
+      handlerExport,
     };
   },
 };
