@@ -407,7 +407,7 @@ export default {
         draggable: true,
       })
         .then(() => {
-          http.auth.deleteBookList({ id: id }).then((res) => {
+          http.bookManagement.deleteBookList({ id: id }).then((res) => {
             if (res.data.err_code == 0) {
               ElMessage.success(res.data.err_msg);
               search();

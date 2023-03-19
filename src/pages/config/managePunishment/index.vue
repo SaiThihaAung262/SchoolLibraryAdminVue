@@ -90,6 +90,13 @@
         />
 
         <el-table-column
+          prop="staff_punishment_amt"
+          label="Punishment Amount (Staff)"
+          align="center"
+          width="300"
+        />
+
+        <el-table-column
           label="Operate"
           align="center"
           width="120"

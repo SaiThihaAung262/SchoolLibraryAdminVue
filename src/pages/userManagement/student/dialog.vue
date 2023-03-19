@@ -17,7 +17,15 @@
       <el-form-item
         label="Email : "
         prop="email"
-        :rules="[{ required: true, message: 'Required!', trigger: 'blur' }]"
+        :rules="[
+          { required: true, message: 'Required!', trigger: 'blur' },
+          {
+            required: true,
+            message: 'Please enter valid email!',
+            trigger: 'blur',
+            pattern: /^[\w\-]+@[a-zA-Z\d\-]+(\.[a-zA-Z]{2,8}){1,2}$/,
+          },
+        ]"
       >
         <el-input v-model="form.email" placeholder="" />
       </el-form-item>
@@ -55,7 +63,17 @@
         v-if="dialogTitle == 'Add'"
         label="Password"
         prop="password"
-        :rules="[{ required: true, message: 'Required!', trigger: 'blur' }]"
+        :rules="[
+          { required: true, message: 'Required!', trigger: 'blur' },
+          {
+            required: true,
+            message:
+              'Password must contain at least 1 Upper and lower letter, 1 digit and 1 special character!',
+            trigger: 'blur',
+            pattern:
+              /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+          },
+        ]"
       >
         <el-input v-model="form.password" placeholder="" type="password" />
       </el-form-item>

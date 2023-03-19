@@ -84,6 +84,10 @@ export default {
           id: 2,
           title: "Student",
         },
+        {
+          id: 3,
+          title: "Staff",
+        },
       ],
     });
 

@@ -37,6 +37,14 @@
       >
         <el-input v-model="form.student_punishment_amt" placeholder="" />
       </el-form-item>
+
+      <el-form-item
+        label="Staff Punishment Amount : "
+        prop="staff_punishment_amt"
+        :rules="[{ required: true, message: 'Required!', trigger: 'blur' }]"
+      >
+        <el-input v-model="form.staff_punishment_amt" placeholder="" />
+      </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
@@ -70,6 +78,7 @@ export default {
         package_name: "",
         teacher_punishment_amt: 0,
         student_punishment_amt: 0,
+        staff_punishment_amt: 0,
         duration_start: 0,
         duration_end: 0,
       },
@@ -100,6 +109,9 @@ export default {
           );
           state.form.student_punishment_amt = parseInt(
             state.form.student_punishment_amt
+          );
+          state.form.staff_punishment_amt = parseInt(
+            state.form.staff_punishment_amt
           );
 
           if (state.dialogTitle == "Add") {
@@ -142,6 +154,7 @@ export default {
           package_name: props.data.package_name,
           teacher_punishment_amt: props.data.teacher_punishment_amt,
           student_punishment_amt: props.data.student_punishment_amt,
+          staff_punishment_amt: props.data.staff_punishment_amt,
           duration_start: props.data.duration_start,
           duration_end: props.data.duration_end,
         };
@@ -150,6 +163,7 @@ export default {
           package_name: "",
           teacher_punishment_amt: 0,
           student_punishment_amt: 0,
+          staff_punishment_amt: 0,
           duration_start: 0,
           duration_end: 0,
         };

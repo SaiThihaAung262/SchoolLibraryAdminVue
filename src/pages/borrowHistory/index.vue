@@ -28,6 +28,23 @@
             </el-select>
           </el-form-item>
 
+          <el-form-item label="Borrow Type">
+            <el-select
+              :multiple="false"
+              placeholder="Please select borrow status"
+              style="width: 100%"
+              v-model="filterForm.type"
+              default-first-option
+            >
+              <el-option
+                v-for="item in borrowTypesOptions"
+                :key="item"
+                :value="item.id"
+                :label="item.title"
+              />
+            </el-select>
+          </el-form-item>
+
           <div style="margin-top: 34px" class="buttonBox">
             <el-button class="app-button" @click="search()">
               <font-awesome-icon
@@ -130,6 +147,15 @@
             >
               Student
             </el-tag>
+            <el-tag
+              type=""
+              class="mx-1"
+              effect="dark"
+              v-if="scope.row.type == 3"
+              round
+            >
+              Staff
+            </el-tag>
           </template>
         </el-table-column>
         <el-table-column label="User ID" align="center" width="100">
@@ -164,11 +190,21 @@
 
         <el-table-column label="Department" align="center" width="300">
           <template #default="scope">
-            {{
-              scope.row.user_data.department
-                ? filterDepartment(scope.row.user_data.department)
-                : "--"
-            }}
+            <span v-if="scope.row.type == 1">
+              {{
+                scope.row.user_data.department
+                  ? filterTeacherDepartment(scope.row.user_data.department)
+                  : "--"
+              }}
+            </span>
+
+            <span v-if="scope.row.type == 3">
+              {{
+                scope.row.user_data.department
+                  ? filterStaffDepartment(scope.row.user_data.department)
+                  : "--"
+              }}
+            </span>
           </template>
         </el-table-column>
 
@@ -353,6 +389,20 @@ export default {
           title: "Expired",
         },
       ],
+      borrowTypesOptions: [
+        {
+          id: 1,
+          title: "Teacher",
+        },
+        {
+          id: 2,
+          title: "Student",
+        },
+        {
+          id: 3,
+          title: "Staff",
+        },
+      ],
     });
 
     const store = useStore();
@@ -394,9 +444,14 @@ export default {
         state.param.status = parseInt(state.filterForm.status);
       }
 
+      if (state.filterForm.type) {
+        state.param.type = parseInt(state.filterForm.type);
+      }
+
       if (state.filterForm.user_uuid) {
         state.param.user_uuid = state.filterForm.user_uuid;
       }
+
       if (state.filterForm.book_uuid) {
         state.param.book_uuid = state.filterForm.book_uuid;
       }
@@ -450,7 +505,7 @@ export default {
       }
     };
 
-    const filterDepartment = (val) => {
+    const filterTeacherDepartment = (val) => {
       switch (val) {
         case 1:
           return "Faculty of Computer Systems & Technologies";
@@ -464,6 +519,16 @@ export default {
           return "Department of Physics";
         case 6:
           return "Department of Admistration and Finance";
+
+        default:
+          return "--";
+      }
+    };
+
+    const filterStaffDepartment = (val) => {
+      switch (val) {
+        case 1:
+          return "Others...";
 
         default:
           return "--";
@@ -597,7 +662,8 @@ export default {
       device: computed(() => store.state.app.device),
       searchShow,
       t,
-      filterDepartment,
+      filterTeacherDepartment,
+      filterStaffDepartment,
       filterYear,
       originalDate,
       changeStatus,

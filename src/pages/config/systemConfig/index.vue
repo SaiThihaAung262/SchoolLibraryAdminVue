@@ -41,6 +41,24 @@
       </el-form-item>
 
       <el-form-item
+        label="Staff Can Borrow Book Amount :"
+        prop="staff_can_borrow_count"
+        :rules="[
+          {
+            required: true,
+            message: 'Cannot be empty or minus',
+            trigger: 'blur',
+            pattern: /^(0*[0-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[0-9][0-9]*)$/,
+          },
+        ]"
+      >
+        <el-input
+          placeholder=""
+          v-model="systemConfigParam.staff_can_borrow_count"
+        />
+      </el-form-item>
+
+      <el-form-item
         label="Teacher can borrow day : "
         prop="teacher_can_borrow_day"
         :rules="[
@@ -72,6 +90,24 @@
         <el-input
           placeholder=""
           v-model="systemConfigParam.student_can_borrow_day"
+        />
+      </el-form-item>
+
+      <el-form-item
+        label="Staff can borrow day : "
+        prop="staff_can_borrow_day"
+        :rules="[
+          {
+            required: true,
+            message: 'Cannot be empty or minus',
+            trigger: 'blur',
+            pattern: /^(0*[0-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[0-9][0-9]*)$/,
+          },
+        ]"
+      >
+        <el-input
+          placeholder=""
+          v-model="systemConfigParam.staff_can_borrow_day"
         />
       </el-form-item>
 
@@ -170,10 +206,12 @@ export default {
               id: res.data.data.id,
               teacher_can_borrow_count: res.data.data.teacher_can_borrow_count,
               student_can_borrow_count: res.data.data.student_can_borrow_count,
+              staff_can_borrow_count: res.data.data.staff_can_borrow_count,
               teacher_punishment_amt: res.data.data.teacher_punishment_amt,
               student_punishment_amt: res.data.data.student_punishment_amt,
               teacher_can_borrow_day: res.data.data.teacher_can_borrow_day,
               student_can_borrow_day: res.data.data.student_can_borrow_day,
+              staff_can_borrow_day: res.data.data.staff_can_borrow_day,
             };
             state.isLoading = false;
           }
@@ -202,17 +240,25 @@ export default {
           state.systemConfigParam.student_can_borrow_count = parseInt(
             state.systemConfigParam.student_can_borrow_count
           );
+          state.systemConfigParam.staff_can_borrow_count = parseInt(
+            state.systemConfigParam.staff_can_borrow_count
+          );
+
           state.systemConfigParam.teacher_punishment_amt = parseInt(
             state.systemConfigParam.teacher_punishment_amt
           );
           state.systemConfigParam.student_punishment_amt = parseInt(
             state.systemConfigParam.student_punishment_amt
           );
+
+          state.systemConfigParam.teacher_can_borrow_day = parseInt(
+            state.systemConfigParam.teacher_can_borrow_day
+          );
           state.systemConfigParam.student_can_borrow_day = parseInt(
             state.systemConfigParam.student_can_borrow_day
           );
-          state.systemConfigParam.teacher_can_borrow_day = parseInt(
-            state.systemConfigParam.teacher_can_borrow_day
+          state.systemConfigParam.staff_can_borrow_day = parseInt(
+            state.systemConfigParam.staff_can_borrow_day
           );
           http.config.updateConfigData(state.systemConfigParam).then((res) => {
             if (res.data.err_code == 0) {
