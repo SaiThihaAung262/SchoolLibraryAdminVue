@@ -1,6 +1,5 @@
 <template>
   <div class="home-container" v-loading="isLoading">
-    <!-- First row -->
     <el-row :gutter="20">
       <el-col :lg="8" :md="12" :xs="24">
         <el-card :body-style="{ padding: '0px' }" class="home-card">
@@ -19,7 +18,9 @@
           </div>
         </el-card>
       </el-col>
-
+    </el-row>
+    <!-- First row -->
+    <el-row :gutter="20">
       <el-col :lg="8" :md="12" :xs="24">
         <el-card :body-style="{ padding: '0px' }" class="home-card">
           <div class="body">
@@ -51,6 +52,24 @@
                 {{ data.total_student ? data.total_student : "0" }}
               </h2>
               <h2 class="content">Students</h2>
+            </div>
+          </div>
+        </el-card>
+      </el-col>
+
+      <el-col :lg="8" :md="12" :xs="24">
+        <el-card :body-style="{ padding: '0px' }" class="home-card">
+          <div class="body">
+            <div class="left">
+              <div class="icon-con pupple">
+                <font-awesome-icon icon="fa-solid fa-people-group" />
+              </div>
+            </div>
+            <div class="right">
+              <h2 class="count">
+                {{ data.total_staff ? data.total_staff : "0" }}
+              </h2>
+              <h2 class="content">Staffs</h2>
             </div>
           </div>
         </el-card>
@@ -120,7 +139,7 @@
 
     <!-- First row -->
     <el-row :gutter="20">
-      <el-col :lg="12" :md="12" :xs="24">
+      <el-col :lg="8" :md="12" :xs="24">
         <el-card :body-style="{ padding: '0px' }" class="home-card">
           <div class="body">
             <div class="left">
@@ -138,7 +157,7 @@
         </el-card>
       </el-col>
 
-      <el-col :lg="12" :md="12" :xs="24">
+      <el-col :lg="8" :md="12" :xs="24">
         <el-card :body-style="{ padding: '0px' }" class="home-card">
           <div class="body">
             <div class="left">
@@ -151,6 +170,24 @@
                 {{ data.have_returned ? data.have_returned : "0" }}
               </h2>
               <h2 class="content">Have Returned</h2>
+            </div>
+          </div>
+        </el-card>
+      </el-col>
+
+      <el-col :lg="8" :md="12" :xs="24">
+        <el-card :body-style="{ padding: '0px' }" class="home-card">
+          <div class="body">
+            <div class="left">
+              <div class="icon-con red">
+                <font-awesome-icon icon="fa-solid fa-arrows-down-to-line" />
+              </div>
+            </div>
+            <div class="right">
+              <h2 class="count">
+                {{ data.expired_count ? data.expired_count : "0" }}
+              </h2>
+              <h2 class="content">Expired</h2>
             </div>
           </div>
         </el-card>
