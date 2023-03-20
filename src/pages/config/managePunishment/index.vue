@@ -61,6 +61,7 @@
           prop="package_name"
           label="Package name"
           align="center"
+          width="200"
         />
 
         <!-- <el-table-column
@@ -73,6 +74,7 @@
           prop="duration_end"
           label="Duration (Day)"
           align="center"
+          width="200"
         />
 
         <el-table-column
