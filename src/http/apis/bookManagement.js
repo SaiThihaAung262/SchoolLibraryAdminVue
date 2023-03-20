@@ -28,6 +28,41 @@ export const deleteCategoryList = (data) =>
     data,
   });
 
+/**
+ * @SubCategory
+ */
+
+export const getSubCategoryList = (data) =>
+  http({
+    url: "/book-sub-category/get-categories",
+    method: "GET",
+    params: data,
+  });
+
+export const addSubCategoryList = (data) =>
+  http({
+    url: "/book-sub-category/create",
+    method: "POST",
+    data,
+  });
+
+export const editSubCategoryList = (data) =>
+  http({
+    url: "/book-sub-category/update",
+    method: "POST",
+    data,
+  });
+
+export const deleteSubCategoryList = (data) =>
+  http({
+    url: "/book-sub-category/delete",
+    method: "POST",
+    data,
+  });
+
+/**
+ * @Books
+ */
 export const getBookList = (data) =>
   http({ url: "/book/get-books", method: "GET", params: data });
 

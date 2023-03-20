@@ -57,12 +57,24 @@
         style="width: 100%"
       >
         <el-table-column prop="id" label="ID" align="center" />
+
         <el-table-column
-          prop="category_name"
-          label="Category Name"
+          prop="sub_category_name"
+          label="Sub Category Name"
           align="center"
         />
 
+        <el-table-column label="Sub Category Name" align="center">
+          <template #default="scope">
+            {{ filterCategory(scope.row.category_id) }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="Description" align="center">
+          <template #default="scope">
+            {{ scope.row.desc }}
+          </template>
+        </el-table-column>
         <!-- <el-table-column prop="desc" label="Description" align="center" /> -->
 
         <el-table-column
@@ -131,7 +143,7 @@
     @created="search"
     :title="dialog.dialogTitle"
     :data="dialog.dialogData"
-    :roleList="roleList"
+    :categoryLists="cetegoryLists"
   />
 </template>
 k
@@ -166,17 +178,21 @@ export default {
         dialogTitle: "",
         dialogData: {},
       },
+      cate_param: {
+        page: 1,
+        page_size: 500,
+      },
       isShowSearch: false,
       tableLists: [],
-      roleList: [],
       total: 0,
+      cetegoryLists: [],
     });
 
     const store = useStore();
 
     const getTableLists = () => {
       state.isLoading = true;
-      http.bookManagement.getCategoryList(state.param).then((res) => {
+      http.bookManagement.getSubCategoryList(state.param).then((res) => {
         if (res.data.err_code == 0) {
           console.log(res.data.data.list);
           state.tableLists = res.data.data.list;
@@ -184,6 +200,32 @@ export default {
           state.isLoading = false;
         }
       });
+    };
+    const getCategoryLists = () => {
+      state.isLoading = true;
+      http.bookManagement.getCategoryList(state.cate_param).then((res) => {
+        if (res.data.err_code == 0) {
+          // console.log(res.data.data.list);
+          state.cetegoryLists = res.data.data.list.map((item) => {
+            return {
+              id: item.id,
+              title: item.category_name,
+            };
+          });
+
+          console.log("Here is category lists", state.cetegoryLists);
+        }
+      });
+    };
+
+    const filterCategory = (val) => {
+      if (state.cetegoryLists) {
+        let myCategory = state.cetegoryLists.filter((item) => {
+          return item.id == val;
+        });
+
+        return myCategory[0]?.title;
+      }
     };
 
     const addNew = () => {
@@ -264,6 +306,7 @@ export default {
     };
 
     onMounted(() => {
+      getCategoryLists();
       getTableLists();
     });
 
@@ -281,6 +324,7 @@ export default {
       device: computed(() => store.state.app.device),
       searchShow,
       t,
+      filterCategory,
     };
   },
 };

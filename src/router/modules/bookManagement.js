@@ -11,6 +11,17 @@ export const bookManagement = [
     },
   },
   {
+    name: "subCategories",
+    path: "/book/subCategories",
+    component: () => import("@/pages/bookManagement/subCategory/index.vue"),
+    meta: {
+      title: "Sub Categories",
+      auth: true,
+      layout: "admin",
+      tagsView: true,
+    },
+  },
+  {
     name: "books",
     path: "/book/books",
     component: () => import("@/pages/bookManagement/book/index.vue"),

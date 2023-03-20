@@ -7,20 +7,41 @@
   >
     <el-form label-width="140px" ref="formRef" :model="form">
       <el-form-item
-        label="Category name : "
-        prop="category_name"
+        label="Sub category name : "
+        prop="sub_category_name"
         :rules="[{ required: true, message: 'Required!', trigger: 'blur' }]"
       >
-        <el-input v-model="form.category_name" placeholder="" />
+        <el-input v-model="form.sub_category_name" placeholder="" />
       </el-form-item>
 
-      <!-- <el-form-item
+      <el-form-item
+        label="Category :"
+        prop="category_id"
+        :rules="[{ required: true, message: 'Required !', trigger: 'blur' }]"
+      >
+        <el-select
+          :multiple="false"
+          placeholder="please select category"
+          style="width: 100%"
+          v-model="form.category_id"
+          default-first-option
+        >
+          <el-option
+            v-for="item in categoryLists"
+            :key="item"
+            :value="item.id"
+            :label="item.title"
+          />
+        </el-select>
+      </el-form-item>
+
+      <el-form-item
         label="Description : "
         prop="desc"
         :rules="[{ required: true, message: 'Required!', trigger: 'blur' }]"
       >
         <el-input v-model="form.desc" placeholder="" />
-      </el-form-item> -->
+      </el-form-item>
 
       <!-- <el-form-item :label="t('table.state')">
         <el-radio-group v-model.number="form.status">
@@ -50,7 +71,7 @@ import { prop } from "dom7";
 import { useI18n } from "vue-i18n";
 export default {
   name: "Dialog",
-  props: ["show", "title", "data", "roleList"],
+  props: ["show", "title", "data", "categoryLists"],
   setup(props, context) {
     const { t } = useI18n();
     const state = reactive({
@@ -58,10 +79,12 @@ export default {
       uploadPercent: 0,
 
       form: {
-        category_name: "",
+        sub_category_name: "",
+        category_id: "",
+        desc: "",
       },
-      roleList: [],
       percentage: 0,
+      categoryLists: [],
     });
 
     const formRef = ref();
@@ -80,12 +103,10 @@ export default {
       formRef.validate((valid) => {
         if (valid) {
           if (state.dialogTitle == "Add") {
-            http.bookManagement.addCategoryList(state.form).then((res) => {
+            http.bookManagement.addSubCategoryList(state.form).then((res) => {
               if (res.data.err_code == 0) {
                 closeDialog(formRef);
-                state.form = {
-                  category_name: "",
-                };
+                state.form = {};
                 ElMessage.success(res.data.err_msg);
 
                 formRef.resetFields();
@@ -95,12 +116,10 @@ export default {
               }
             });
           } else {
-            http.bookManagement.editCategoryList(state.form).then((res) => {
+            http.bookManagement.editSubCategoryList(state.form).then((res) => {
               if (res.data.err_code == 0) {
                 closeDialog(formRef);
-                state.form = {
-                  category_name: "",
-                };
+                state.form = {};
                 ElMessage.success(res.data.err_msg);
 
                 formRef.resetFields();
@@ -116,15 +135,20 @@ export default {
 
     onUpdated(() => {
       state.dialogTitle = props.title;
-      state.roleList = props.roleList;
+      state.categoryLists = props.categoryLists;
+
       if (props.data.hasOwnProperty("id")) {
         state.form = {
           id: props.data.id,
-          category_name: props.data.category_name,
+          sub_category_name: props.data.sub_category_name,
+          category_id: props.data.category_id,
+          desc: props.data.desc,
         };
       } else {
         state.form = {
-          category_name: "",
+          sub_category_name: "",
+          category_id: "",
+          desc: "",
         };
       }
     });

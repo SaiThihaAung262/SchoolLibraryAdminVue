@@ -15,15 +15,15 @@
       </el-form-item>
 
       <el-form-item
-        label="Category :"
-        prop="category_id"
+        label="Sub Category :"
+        prop="sub_category_id"
         :rules="[{ required: true, message: 'Required !', trigger: 'blur' }]"
       >
         <el-select
           :multiple="false"
           placeholder="please select category"
           style="width: 100%"
-          v-model="form.category_id"
+          v-model="form.sub_category_id"
           default-first-option
         >
           <el-option
@@ -149,7 +149,7 @@ export default {
       uploadPercent: 0,
       form: {
         title: "",
-        category_id: "",
+        sub_category_id: "",
         status: 1,
         author: "",
         summary: "",
@@ -179,7 +179,7 @@ export default {
       formRef.validate((valid) => {
         if (valid) {
           console.log("Here is submit 22222");
-          state.form.category_id = parseInt(state.form.category_id);
+          state.form.sub_category_id = parseInt(state.form.sub_category_id);
           state.form.status = parseInt(state.form.status);
           state.form.available_qty = parseInt(state.form.available_qty);
 
@@ -191,7 +191,7 @@ export default {
                 closeDialog(formRef);
                 state.form = {
                   title: "",
-                  category_id: "",
+                  sub_category_id: "",
                   status: 1,
                   author: "",
                   summary: "",
@@ -211,7 +211,7 @@ export default {
                 closeDialog(formRef);
                 state.form = {
                   title: "",
-                  category_id: "",
+                  sub_category_id: "",
                   status: 1,
                   author: "",
                   summary: "",
@@ -292,7 +292,7 @@ export default {
       if (props.data.hasOwnProperty("id")) {
         state.form.id = props.data.id;
         state.form.title = props.data.title;
-        state.form.category_id = props.data.category_id;
+        state.form.sub_category_id = props.data.sub_category_id;
         state.form.status = props.data.status;
         state.form.author = props.data.author;
         state.form.summary = props.data.summary;
@@ -314,7 +314,7 @@ export default {
       } else {
         state.form = {
           title: "",
-          category_id: "",
+          sub_category_id: "",
           status: 1,
           author: "",
           summary: "",

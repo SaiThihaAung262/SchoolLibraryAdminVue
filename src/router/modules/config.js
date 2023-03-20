@@ -15,7 +15,7 @@ export const config = [
     path: "/cofig/managementPunishment",
     component: () => import("@/pages/config/managePunishment/index.vue"),
     meta: {
-      title: "Books",
+      title: "Punishments",
       auth: true,
       layout: "admin",
       tagsView: true,

@@ -21,6 +21,15 @@ export const bookManagement = [
       },
       {
         id: 102,
+        name: "Sub Categories",
+        icon: "fa-solid fa-volleyball",
+        type: "page",
+        permission: true,
+        perName: "books",
+        url: "/book/subCategories",
+      },
+      {
+        id: 103,
         name: "Books",
         icon: "fa-solid fa-book",
         type: "page",

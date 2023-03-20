@@ -112,7 +112,7 @@
         />
         <el-table-column label="Category" align="center" width="250">
           <template #default="scope">
-            {{ filterCategory(scope.row.category_id) }}
+            {{ filterCategory(scope.row.sub_category_id) }}
           </template>
         </el-table-column>
 
@@ -256,7 +256,6 @@
     @created="search"
     :title="dialog.dialogTitle"
     :data="dialog.dialogData"
-    :roleList="roleList"
     :categoryLists="cetegoryLists"
     :statusOptions="statusOptions"
   />
@@ -302,7 +301,6 @@ export default {
       isShowSearch: false,
       tableLists: [],
       cetegoryLists: [],
-      roleList: [],
       total: 0,
 
       statusOptions: [
@@ -337,7 +335,6 @@ export default {
           console.log(res.data.data.list);
           state.tableLists = res.data.data.list;
           state.total = res.data.data.total;
-          state.roleList = res.data.data.roles;
           state.isLoading = false;
         }
       });
@@ -345,10 +342,15 @@ export default {
 
     const getCategoryLists = () => {
       state.isLoading = true;
-      http.bookManagement.getCategoryList(state.cate_param).then((res) => {
+      http.bookManagement.getSubCategoryList(state.cate_param).then((res) => {
         if (res.data.err_code == 0) {
           console.log(res.data.data.list);
-          state.cetegoryLists = res.data.data.list;
+          state.cetegoryLists = res.data.data.list.map((item) => {
+            return {
+              id: item.id,
+              title: item.sub_category_name,
+            };
+          });
         }
       });
     };
