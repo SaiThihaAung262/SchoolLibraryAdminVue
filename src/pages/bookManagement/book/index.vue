@@ -45,6 +45,10 @@
             </el-select>
           </el-form-item>
 
+          <el-form-item label="Author">
+            <el-input placeholder="Author" v-model="filterForm.author" />
+          </el-form-item>
+
           <div style="margin-top: 34px" class="buttonBox">
             <el-button class="app-button" @click="search()">
               <font-awesome-icon
@@ -120,8 +124,14 @@
           prop="available_qty"
           label="Total Book"
           align="center"
-          width="100"
+          width="130"
         />
+
+        <el-table-column label="Available Qty" align="center" width="130">
+          <template #default="scope">
+            {{ scope.row.available_qty - scope.row.borrow_qty }}
+          </template>
+        </el-table-column>
         <el-table-column
           prop="borrow_qty"
           label="Borrowing Qty"
@@ -397,6 +407,9 @@ export default {
       }
       if (state.filterForm.status) {
         state.param.status = parseInt(state.filterForm.status);
+      }
+      if (state.filterForm.author) {
+        state.param.author = state.filterForm.author;
       }
     };
 

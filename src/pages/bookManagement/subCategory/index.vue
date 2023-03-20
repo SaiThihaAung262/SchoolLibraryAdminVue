@@ -4,11 +4,11 @@
       <div class="form-content">
         <el-form label-position="top" label-width="300px">
           <el-form-item label="Id">
-            <el-input placeholder="id" v-model="filterForm.id" />
+            <el-input placeholder="" v-model="filterForm.id" />
           </el-form-item>
 
-          <el-form-item label="Title">
-            <el-input placeholder="Title" v-model="filterForm.category_name" />
+          <el-form-item label="Sub category name">
+            <el-input placeholder="" v-model="filterForm.sub_category_name" />
           </el-form-item>
 
           <div style="margin-top: 34px" class="buttonBox">
@@ -252,8 +252,8 @@ export default {
       if (state.filterForm.id) {
         state.param.id = parseInt(state.filterForm.id);
       }
-      if (state.filterForm.category_name) {
-        state.param.category_name = state.filterForm.category_name;
+      if (state.filterForm.sub_category_name) {
+        state.param.sub_category_name = state.filterForm.sub_category_name;
       }
     };
 

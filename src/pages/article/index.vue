@@ -7,11 +7,8 @@
             <el-input placeholder="Id" v-model="filterForm.id" />
           </el-form-item>
 
-          <el-form-item :label="t('common.title')">
-            <el-input
-              :placeholder="t('common.title')"
-              v-model="filterForm.title"
-            />
+          <el-form-item label="Category name">
+            <el-input placeholder="" v-model="filterForm.category_name" />
           </el-form-item>
 
           <el-form-item :label="t('common.sort')">

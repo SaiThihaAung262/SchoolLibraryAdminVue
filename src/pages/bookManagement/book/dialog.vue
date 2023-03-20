@@ -81,7 +81,7 @@
       </el-form-item>
 
       <el-form-item
-        label="Summary: "
+        label="Description: "
         prop="summary"
         :rules="[{ required: true, message: 'Required !', trigger: 'blur' }]"
       >
