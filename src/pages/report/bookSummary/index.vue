@@ -45,7 +45,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column label="Total Book" align="center">
+        <el-table-column label="Total Income Book" align="center">
           <template #default="scope">
             {{ scope.row.total_book }}
           </template>

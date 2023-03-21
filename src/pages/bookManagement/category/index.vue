@@ -56,7 +56,7 @@
         height="65vh"
         style="width: 100%"
       >
-        <el-table-column prop="id" label="ID" align="center" />
+        <el-table-column prop="id" label="ID" align="center" width="120" />
         <el-table-column
           prop="category_name"
           label="Category Name"

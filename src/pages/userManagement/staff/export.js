@@ -58,6 +58,10 @@ const excelExport = () => {
 const filterDepartment = (val) => {
   switch (val) {
     case 1:
+      return "Department of Admistration.";
+    case 2:
+      return "Department of Admistration";
+    case 3:
       return "Others...";
 
     default:

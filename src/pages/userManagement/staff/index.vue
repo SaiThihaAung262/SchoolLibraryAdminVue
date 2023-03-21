@@ -216,6 +216,14 @@ export default {
       departMentList: [
         {
           id: 1,
+          title: "Department of Admistration",
+        },
+        {
+          id: 2,
+          title: "Department of Finance",
+        },
+        {
+          id: 3,
           title: "Others...",
         },
       ],
@@ -237,6 +245,10 @@ export default {
     const filterDepartment = (val) => {
       switch (val) {
         case 1:
+          return "Department of Admistration.";
+        case 2:
+          return "Department of Admistration";
+        case 3:
           return "Others...";
 
         default:

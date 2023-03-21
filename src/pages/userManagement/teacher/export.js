@@ -68,7 +68,7 @@ const filterDepartment = (val) => {
     case 5:
       return "Department of Physics";
     case 6:
-      return "Department of Admistration and Finance";
+      return "Department of Languages";
 
     default:
       return "--";

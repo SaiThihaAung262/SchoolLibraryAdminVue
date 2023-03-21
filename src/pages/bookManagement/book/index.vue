@@ -190,7 +190,7 @@
 
         <el-table-column label="Publish Date" align="center" width="180">
           <template #default="scope">
-            {{ scope.row.publish_date }}
+            {{ scope.row.publish_date || "--" }}
           </template>
         </el-table-column>
 

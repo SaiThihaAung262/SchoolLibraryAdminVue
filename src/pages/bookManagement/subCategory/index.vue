@@ -56,7 +56,7 @@
         height="65vh"
         style="width: 100%"
       >
-        <el-table-column prop="id" label="ID" align="center" />
+        <el-table-column prop="id" label="ID" align="center" width="120" />
 
         <el-table-column
           prop="sub_category_name"
@@ -64,17 +64,17 @@
           align="center"
         />
 
-        <el-table-column label="Sub Category Name" align="center">
+        <el-table-column label="Category" align="center">
           <template #default="scope">
             {{ filterCategory(scope.row.category_id) }}
           </template>
         </el-table-column>
 
-        <el-table-column label="Description" align="center">
+        <!-- <el-table-column label="Description" align="center">
           <template #default="scope">
             {{ scope.row.desc }}
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <!-- <el-table-column prop="desc" label="Description" align="center" /> -->
 
         <el-table-column

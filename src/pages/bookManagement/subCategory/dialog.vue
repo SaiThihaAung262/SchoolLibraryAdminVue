@@ -5,7 +5,7 @@
     draggable
     :title="dialogTitle"
   >
-    <el-form label-width="140px" ref="formRef" :model="form">
+    <el-form label-width="170px" ref="formRef" :model="form">
       <el-form-item
         label="Sub category name : "
         prop="sub_category_name"
@@ -35,13 +35,13 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item
+      <!-- <el-form-item
         label="Description : "
         prop="desc"
         :rules="[{ required: true, message: 'Required!', trigger: 'blur' }]"
       >
         <el-input v-model="form.desc" placeholder="" />
-      </el-form-item>
+      </el-form-item> -->
 
       <!-- <el-form-item :label="t('table.state')">
         <el-radio-group v-model.number="form.status">
@@ -81,7 +81,7 @@ export default {
       form: {
         sub_category_name: "",
         category_id: "",
-        desc: "",
+        // desc: "",
       },
       percentage: 0,
       categoryLists: [],
@@ -148,7 +148,7 @@ export default {
         state.form = {
           sub_category_name: "",
           category_id: "",
-          desc: "",
+          // desc: "",
         };
       }
     });

@@ -237,7 +237,7 @@ export default {
         },
         {
           id: 6,
-          title: "Department of Admistration and Finance",
+          title: "Department of Languages",
         },
       ],
     });
@@ -268,7 +268,7 @@ export default {
         case 5:
           return "Department of Physics";
         case 6:
-          return "Department of Admistration and Finance";
+          return "Department of Languages";
 
         default:
           return "--";
